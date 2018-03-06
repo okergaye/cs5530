@@ -1,4 +1,4 @@
-package cs5530FinalProj;
+package cs5530;
 
 import java.sql.*;
 
@@ -7,9 +7,9 @@ public class Connector {
 	public Statement stmt;
 	public Connector() throws Exception {
 		try{
-		 	String userName = "5530u37";
-	   		String password = "4tbd8ko9";
-	        	String url = "jdbc:mysql://georgia.eng.utah.edu/5530db37";
+		 	String userName = "5530user";
+	   		String password = "5530@18";
+	        	String url = "jdbc:mysql://georgia.eng.utah.edu/cs5530db";
 		        Class.forName ("com.mysql.jdbc.Driver").newInstance ();
         		con = DriverManager.getConnection (url, userName, password);
 
