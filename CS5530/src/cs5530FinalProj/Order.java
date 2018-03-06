@@ -10,7 +10,7 @@ public class Order{
 		String query;
 		String resultstr="";
 		ResultSet results; 
-		query="Select * from orders where "+attrName+"='"+attrValue+"'";
+		query="Select * from UU where "+attrName+"='"+attrValue+"'";
 		try{
 			results = stmt.executeQuery(query);
         } catch(Exception e) {
@@ -20,8 +20,8 @@ public class Order{
 		}
 		System.out.println("Order:getOrders query="+query+"\n");
 		while (results.next()){
-			resultstr += "<b>"+results.getString("login")+"</b> purchased "+results.getInt("quantity") +
-							" copies of &nbsp'<i>"+results.getString("title")+"'</i><BR>\n";	
+			resultstr += "<b>"+results.getString("login")+"</b> purchased "+results.getInt("phone") +
+							" copies of &nbsp'<i>"+results.getString("address")+"'</i><BR>\n";	
 		}
 		return resultstr;
 	}

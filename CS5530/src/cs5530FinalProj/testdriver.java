@@ -10,10 +10,10 @@ public class testdriver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try{
-			Connector con= new Connector();
+			Connector2 con= new Connector2();
 			Order order= new Order();
 			
-			String result=order.getOrders("login", "user1", con.stmt);
+			String result=order.getOrders("login", "testLogin", con.stmt);
 			System.out.println(result);
 			con.closeConnection();
 		}
