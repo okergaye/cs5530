@@ -42,9 +42,9 @@ public class UberUser
 	    return output;
 	}
 	
-	public int createUser(String login, String password, String name, String address, String phone, Statement stmt)
+	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
-		String sql = "insert into Users values ('%" + login + "%', '%" + name + "%', '%" + password + "%',"
+		String sql = "insert into UberUser values ('%" + login + "%', '%" + name + "%', '%" + password + "%',"
 				+ " '%" + address + "%', '%" + phone + "%')";
 		int output = -1;
 		try
@@ -59,12 +59,12 @@ public class UberUser
 
 		if (output > 0)
 		{
-			System.out.println("User Creation Successful");
+			System.out.println("UberUser Creation Successful");
 			return 1;
 		}
 		else
 		{
-			System.out.println("User Creation Failed");
+			System.out.println("UberUser Creation Failed");
 			return 0;
 		} 	
 	}
