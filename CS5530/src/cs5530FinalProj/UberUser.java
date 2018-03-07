@@ -44,7 +44,7 @@ public class UberUser
 	
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
-		String sql = "insert into UberUser values ('%" + login + "%', '%" + name + "%', '%" + password + "%',"
+		String sql = "insert into UberUser values ('%" + login + "%', '%" + password + "%', '%" + name + "%',"
 				+ " '%" + address + "%', '%" + phone + "%')";
 		int output = -1;
 		try
@@ -67,5 +67,40 @@ public class UberUser
 			System.out.println("UberUser Creation Failed");
 			return 0;
 		} 	
+	}
+	
+	public int trustUser(String login1, String login2, Statement stmt)
+	{
+		String sql = ""; // Not sure how to implement trust here
+		String output = "";
+		ResultSet rs=null;
+		try
+		{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			output += "";
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+		//set up trust setup here
+		return -1;
 	}
 }
