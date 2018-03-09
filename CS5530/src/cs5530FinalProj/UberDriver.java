@@ -7,44 +7,9 @@ public class UberDriver
 	public UberDriver()
 	{}
 	
-	public String getUberDriver(String login, String UUID, Statement stmt)
-	{
-		String sql="";
-		String output="";
-		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
-	 	try
-	 	{
-	 		rs=stmt.executeQuery(sql);
-	 		while (rs.next())
-	 		{
-	 		}
-	     
-	 		rs.close();
-	 	}
-	 	catch(Exception e)
-	 	{
-	 		System.out.println("cannot execute the query");
-	 	}
-	 	finally
-	 	{
-	 		try
-	 		{
-		 		if (rs!=null && !rs.isClosed())
-		 			rs.close();
-	 		}
-	 		catch(Exception e)
-	 		{
-	 			System.out.println("cannot close resultset");
-	 		}
-	 	}
-	    return output;
-	}
-	
 	public int createUberDriver(String login, String password, String name, String address, String phone, Statement stmt)
 	{
-		String sql = "insert into UberDriver values ('%" + login + "%', '%" + password + "%', '%" + name + "%',"
-				+ " '%" + address + "%', '%" + phone + "%')";
+		String sql = "insert into UD values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
 		int output = -1;
 		try
 		{

@@ -7,45 +7,9 @@ public class UberUser
 	public UberUser()
 	{}
 	
-	public String getUberUser(String login, String password, Statement stmt)
-	{
-		String sql="select uuid from UberUser where login = '%"+login+"%' and password = '%"+password+"%'";
-		String output="";
-		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
-	 	try
-	 	{
-	 		rs=stmt.executeQuery(sql);
-	 		while (rs.next())
-	 		{
-	 			output += rs.getString("uuid")+"\n";
-	 		}
-	     
-	 		rs.close();
-	 	}
-	 	catch(Exception e)
-	 	{
-	 		System.out.println("cannot execute the query");
-	 	}
-	 	finally
-	 	{
-	 		try
-	 		{
-		 		if (rs!=null && !rs.isClosed())
-		 			rs.close();
-	 		}
-	 		catch(Exception e)
-	 		{
-	 			System.out.println("cannot close resultset");
-	 		}
-	 	}
-	    return output;
-	}
-	
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
-		String sql = "insert into UberUser values ('%" + login + "%', '%" + password + "%', '%" + name + "%',"
-				+ " '%" + address + "%', '%" + phone + "%')";
+		String sql = "insert into UU values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
 		int output = -1;
 		try
 		{
@@ -71,7 +35,7 @@ public class UberUser
 	
 	public int trustUser(String login1, String login2, String trust, Statement stmt)
 	{
-		String sql = "select Count(*) as counter from TrustUsers where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
+		String sql = "select Count(*) as counter from Trust where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -104,7 +68,7 @@ public class UberUser
 		
 		if (output.equals("0")) //If the user did not trust the 2nd user yet insert it into trustUsers
 		{
-			sql = "insert into TrustedUsers values ('%" + login1 + "%', '%" + login2 + "%', '%" + trust + "%')"; // Not sure how to implement trust here
+			sql = "insert into Trust values ('%" + login1 + "%', '%" + login2 + "%', '%" + trust + "%')";
 			int output2 = -1;
 			try
 			{
@@ -129,7 +93,7 @@ public class UberUser
 		}
 		else //If the user already has a trust setting update the trust settings for users trust to 2nd user
 		{
-			sql = "update TrustedUsers set trust = '%" + trust + "%' where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
+			sql = "update Trust set trust = '%" + trust + "%' where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
 			int output2 = -1;
 			try
 			{

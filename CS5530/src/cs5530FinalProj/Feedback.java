@@ -42,10 +42,10 @@ public class Feedback {
 	    return output;
 	}
 	
-	public int createFeedback(String fid, String login, String text, String date, String score, Statement stmt)
+	public int createFeedback(String fid, String login, String text, String date, Statement stmt)
 	{
 		String sql = "insert into Feedback values ('%" + fid + "%', '%" + login + "%', '%" + text + "%',"
-				+ " '%" + date + "%', '%" + score + "%')";
+				+ " '%" + date + "%')";
 		int output = -1;
 		try
 		{
@@ -108,33 +108,7 @@ public class Feedback {
 	 		return 0;
 	 	}
 	 	else //User rating others feedback
-	 	{
-	 		//Insert into new table here? or update score?
-	 		// update method
-	 		sql = "update Feedback set score = '%" + score + "%' where fid = '%" + fid + "%'";
-	 		int output2 = -1;
-			try
-			{
-				output2 = stmt.executeUpdate(sql);
-			}
-			catch(Exception e)
-			{
-				System.out.println("cannot execute the query");
-				System.out.println(e.getMessage());
-			}
-
-			if (output2 > 0)
-			{
-				System.out.println("Feedback Rating Successful");
-				return 1;
-			}
-			else
-			{
-				System.out.println("Feedback Rating Failed");
-				return 0;
-			}
-			
-			/* creating new table
+	 	{		
 			sql = "insert into Ratings values ('%" + fid + "%', '%" + login + "%', '%" + score + "%')";
 	 		int output2 = -1;
 			try
@@ -157,7 +131,6 @@ public class Feedback {
 				System.out.println("Feedback Rating Failed");
 				return 0;
 			}
-			*/
 	 	}
 	}
 }
