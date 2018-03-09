@@ -14,8 +14,9 @@ public class testdriver2 {
 	{
 		System.out.println("        Welcome to UUber System     ");
     	System.out.println("1. Registration:");
-    	System.out.println("2. enter your own query:");
-    	System.out.println("3. exit:");
+    	System.out.println("2. Login:");
+    	System.out.println("3. enter your own query:");
+    	System.out.println("4. exit:");
     	System.out.println("pleasse enter your choice:");
 	}
 	
@@ -51,7 +52,7 @@ public class testdriver2 {
 				{	 
 					continue;
 				}
-				if (c<1 | c>3)
+				if (c<1 | c>4)
 					continue;
 				if (c==1)
 				{
@@ -102,6 +103,15 @@ public class testdriver2 {
 					}
 				}
 				else if (c==2)
+				{
+					System.out.println("Login:");
+					while ((login = in.readLine()) == null && login.length() == 0);
+					System.out.println("Password:");
+					while ((password = in.readLine()) == null && password.length() == 0);
+					
+					//Verify login here
+				}
+				else if (c==3)
 				{	 
 					System.out.println("please enter your query below:");
 					while ((sql = in.readLine()) == null && sql.length() == 0);
