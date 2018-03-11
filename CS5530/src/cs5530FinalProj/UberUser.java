@@ -4,12 +4,30 @@ import java.sql.*;
 
 public class UberUser 
 {
+	String login;
+	String password;
+	String name;
+	String address;
+	String phone;
+	boolean driver = false;
+	boolean loggedIn = false;
+	
 	public UberUser()
 	{}
 	
-	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
+	public int createUberUser(String login, String password, String name, String address, String phone, String type, Statement stmt)
 	{
-		String sql = "insert into UU values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
+		String sql;
+		//Creates the user to be in
+		if (type.equals("user"))
+		{
+			sql = "insert into UU values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
+		}
+		else //The user is a driver
+		{
+			sql = "insert into UD values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
+		}
+		
 		int output = -1;
 		try
 		{
@@ -29,6 +47,144 @@ public class UberUser
 		else
 		{
 			System.out.println("UberUser Creation Failed");
+			return 0;
+		} 	
+	}
+	
+	public void verifyLogin(String login, String password, String type, Statement stmt)
+	{
+		String sql;
+		// Get the user info and make sure there is only 1
+		if (type.equals("user"))
+		{
+			sql = "select *, count(*) as count from UU where login = '" + login + "' and password = '" + password + "'";
+		}
+		else //The user is a driver
+		{
+			sql = "select *, count(*) as count from UD where login = '" + login + "' and password = '" + password + "'";
+		}
+		String count = "";
+		String localLogin = "";
+		String localPassword = "";
+		String localName = "";
+		String localAddress = "";
+		String localPhone = "";
+		ResultSet rs=null;
+		try
+		{
+			rs=stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				count = rs.getString("count");
+				localLogin = rs.getString("login");
+				localPassword = rs.getString("password");
+				localName = rs.getString("name");
+				localAddress = rs.getString("address");
+				localPhone = rs.getString("phone");
+			}
+
+			rs.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+		}
+		finally
+		{
+			try{
+				if (rs!=null && !rs.isClosed())
+					rs.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("cannot close resultset");
+			}
+		}
+		
+		int c = Integer.parseInt(count);
+		//Setting values to current user until logout so it is easier on menu.
+		if (c == 1)
+		{
+			this.login = localLogin;
+			this.password = localPassword;
+			this.name = localName;
+			this.address = localAddress;
+			this.phone = localPhone;
+			this.loggedIn = true;
+			
+			if (type.equals("driver"))
+			{
+				this.driver = true;
+			}
+		}
+	}
+	
+	public int userExists(String login, Statement stmt)
+	{
+		String sql = "select count (*) as count from Users where login = '" + login + "'";
+		String output = "";
+		ResultSet rs = null;
+		try
+		{
+			rs=stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				output = rs.getString("count");
+			}
+
+			rs.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+		}
+		finally
+		{
+			try{
+				if (rs!=null && !rs.isClosed())
+					rs.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("cannot close resultset");
+			}
+		}
+		return Integer.parseInt(output);
+	}
+	
+	//Reset values
+	public void logout()
+	{
+		this.login = null;
+		this.password = null;
+		this.name = null;
+		this.address = null;
+		this.phone = null;
+		this.driver = false;
+		this.loggedIn = false;
+	}
+	
+	public int favoriteCar(String vin, String login, Statement stmt)
+	{
+		String sql = "insert into Favorites values ('" + vin + "', '" + login + "')";
+		int output = -1;
+		try{
+			output = stmt.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Car Favorited Successful");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Car Favorited Failed");
 			return 0;
 		} 	
 	}

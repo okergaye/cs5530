@@ -9,9 +9,9 @@ public class Connector {
 		try{
 		 	String userName = "5530u37";
 	   		String password = "4tbd8ko9";
-	        	String url = "jdbc:mysql://georgia.eng.utah.edu/5530db37";
-		        Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-        		con = DriverManager.getConnection (url, userName, password);
+        	String url = "jdbc:mysql://georgia.eng.utah.edu/5530db37";
+	        Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+    		con = DriverManager.getConnection (url, userName, password);
 
 			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
         	//stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
