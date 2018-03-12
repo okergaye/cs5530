@@ -78,6 +78,52 @@ public class Database
 
 	/////////
 	
+	//this is for problem 2
+		public void reserveCar(String login, int reserveHours, Statement stmt){
+			
+			String vin, pid;
+			int resHour = reserveHours;
+			//Get the user info and make sure there is only 1
+				
+			
+			String sql = "select vin, A.pid from Period P,Available A,UC C where "
+					+ "P.pid = A.pid and A.login = C.login and fromHour < '" + resHour + "' and toHour > '" + resHour + "'";
+		//	select vin, A.pid from Period P,Available A,UC C where fromHour < 2 and toHour > 2 and P.pid = A.pid and A.login = C.login;
+
+			// get maybe avalible pid, this will catch exceptions
+			ResultSet rs=null;
+			try
+			{
+				rs=stmt.executeQuery(sql);
+				while (rs.next())
+				{
+					vin = rs.getString("vin");
+					pid = rs.getString("pid");
+					System.out.println(vin + pid);
+
+				}
+
+				rs.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("cannot execute the query");
+			}
+			finally
+			{
+				try{
+					if (rs!=null && !rs.isClosed())
+						rs.close();
+				}
+				catch(Exception e)
+				{
+					System.out.println("cannot close resultset");
+				}
+			} 
+			// now we should have an accepted pid
+			
+			
+		}
 	
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{

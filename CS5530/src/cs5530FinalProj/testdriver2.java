@@ -83,6 +83,10 @@ public class testdriver2 {
 				
 				
 				
+				
+				user.reserveCar(user.login, 2 , con.stmt);
+				
+				
 				break;
 				
 			case 2: // Favorite
