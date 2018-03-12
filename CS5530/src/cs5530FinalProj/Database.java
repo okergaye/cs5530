@@ -79,18 +79,10 @@ public class Database
 	/////////
 	
 	
-	public int createUberUser(String login, String password, String name, String address, String phone, String type, Statement stmt)
+	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
 		String sql;
-		//Creates the user to be in
-		if (type.equals("user"))
-		{
-			sql = "insert into UU values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
-		}
-		else //The user is a driver
-		{
-			sql = "insert into UD values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
-		}
+		sql = "insert into UU values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
 		
 		int output = -1;
 		try

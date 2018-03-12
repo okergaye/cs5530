@@ -206,11 +206,11 @@ public class testdriver2 {
 				
 				if (c == 1) //Register to standard user
 				{
-					user.createUberUser(login, password, name, address, phone, "user", con.stmt);
+					user.createUberUser(login, password, name, address, phone, con.stmt);
 				}
 				else
 				{
-					user.createUberUser(login, password, name, address, phone, "driver", con.stmt);
+					user.createUberDriver(login, password, name, address, phone, con.stmt);
 				}
 			}
 			else if (c==2)
