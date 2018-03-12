@@ -10,6 +10,7 @@ public class testdriver2 {
 	/**
 	 * @param args
 	 */
+	//simple console write lines
 	public static void displayMenu()
 	{
 		System.out.println("        Welcome to UUber System     ");
@@ -18,7 +19,7 @@ public class testdriver2 {
     	System.out.println("3. exit:");
     	System.out.println("pleasse enter your choice:");
 	}
-	
+
 	public static void displayRegistrationMenu()
 	{
 		System.out.println("        Registration     ");
@@ -48,8 +49,12 @@ public class testdriver2 {
 		System.out.println("2. Set Hours of Op:");
 		System.out.println("3. Logout:");
 	}
+	//end of console write line menues
 	
-	public static void startUser(BufferedReader in, Connector con, UberUser user) throws IOException
+	
+	//this is main menu option 2
+	
+	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
 		String choice;
 		String username;
@@ -75,6 +80,9 @@ public class testdriver2 {
 			switch (c)
 			{
 			case 1: //Reserve
+				
+				
+				
 				break;
 				
 			case 2: // Favorite
@@ -136,7 +144,8 @@ public class testdriver2 {
 		mainMenu(in, con, user);
 	}
 	
-	public static void mainMenu(BufferedReader in, Connector con, UberUser user) throws IOException
+	// this is actually the reg menu!!! aka main menu option 1
+	public static void mainMenu(BufferedReader in, Connector con, Database user) throws IOException
 	{
 		String choice;
         int c=0;
@@ -230,11 +239,13 @@ public class testdriver2 {
 		}
 	}
 	
+	
+	
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("Example for cs5530");
 		Connector con=null;
-		UberUser user = new UberUser();
+		Database data = new Database();
 		String choice;
         int c=0;
         try
@@ -242,13 +253,23 @@ public class testdriver2 {
 			//remember to replace the password
 			con= new Connector();
 			System.out.println ("Database connection established");
-			
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			  
-			mainMenu(in, con, user);
+			
+			
+			//this matters
+			mainMenu(in, con, data);
 			
 			System.out.println("EoM");
 			con.stmt.close();
+			
+			
+			
+			
+			
+			
+			
+			//below this is irelivant
 		}
 		catch (Exception e)
 		{
@@ -264,7 +285,6 @@ public class testdriver2 {
 				con.closeConnection();
 				System.out.println ("Database connection terminated");
 				}
-				 
 				catch (Exception e) { /* ignore close errors */ }
 			}	 
 		}
