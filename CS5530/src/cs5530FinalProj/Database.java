@@ -1,7 +1,12 @@
 package cs5530FinalProj;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+
+
+
 
 public class Database 
 {
@@ -24,7 +29,7 @@ public class Database
 		//Get the user info and make sure there is only 1
 		
 		String sql = "INSERT INTO UC "
-				+ "VALUES ('" + vin + "' '" + cat + "' '" + login + "'  '" + make + "' '" + model + "' ) ";
+				+ "VALUES ('" + vin + "', '" + cat + "', '" + login + "',  '" + make + "', '" + model + "' ) ";
 	
 		//	INSERT INTO UC
 	    //  VALUES ( 001, "sedan" , 'notReal')
@@ -58,7 +63,7 @@ public class Database
 	//this should ask the user for a vin, and then return t
 	public int modCar(String login, String vin, String cat, String make, String model, Statement s ) {
 		
-		String sql = "MODIFY UC "
+		String sql = "UPDATE UC "
 				+ "SET category = '" + cat + "', make = '" + make + "', model = '" + model + "' "
 						+ "WHERE vin = '" + vin + "' ";
 	
@@ -158,28 +163,19 @@ public class Database
 	/////////
 	
 	//this is for problem 2
-    public void reserveCar(String login, int reserveHours, Statement stmt){
+    public ArrayList reserveCar(String login, int reserveHours, Statement stmt){
 			
-			String vin, pid;
-			int resHour = reserveHours;
-			//Get the user info and make sure there is only 1
-				Date test = new Date(2);
-				test.getHours();
-				test.getDate();
-				//test.
-				Calendar test3; // =  Calendar().getInstance();
-				//test3.set
-				Timestamp time = new Timestamp(resHour);
-				//time.getHours();
-				
-			//	String sql = "INSERT INTO UC "
-			//			+ "VALUES ('" + vin + "' '" + cat + "' '" + login + "'  '" + make + "' '" + model + "' ) ";
-				
-			String sql = "select vin, A.pid from Period P,Available A,UC C where "
-					+ "P.pid = A.pid and A.login = C.login and fromHour < '" + resHour + "' and toHour > '" + resHour + "'";
-		//	select vin, A.pid from Period P,Available A,UC C where fromHour < 2 and toHour > 2 and P.pid = A.pid and A.login = C.login;
+    		
+    		ArrayList<Triple> list = new ArrayList<Triple>();
+    	
 
-			// get maybe avalible pid, this will catch exceptions
+			String vin, pid, cost;
+			int resHour = reserveHours;
+				
+			String sql = "select vin, A.pid, toHour - fromHour as Cost from Period P,Available A,UC C where "
+					+ "P.pid = A.pid and A.login = C.login and fromHour < '" + resHour + "' and toHour > '" + resHour + "'";
+
+			// get maybe available pid, this will catch exceptions
 			ResultSet rs=null;
 			try
 			{
@@ -188,8 +184,9 @@ public class Database
 				{
 					vin = rs.getString("vin");
 					pid = rs.getString("pid");
-					System.out.println(vin + pid);
-
+					cost = rs.getString("cost");
+					System.out.println(vin + " " + pid + " " + cost); //testing
+					list.add(new Triple(vin, pid, cost));
 				}
 
 				rs.close();
@@ -210,7 +207,7 @@ public class Database
 				}
 			} 
 			// now we should have an accepted pid
-			
+			return list;
 			
 		}
 	

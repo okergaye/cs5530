@@ -94,14 +94,14 @@ public class testdriver2 {
 			switch (c)
 			{
 			case 1: //Reserve
-				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+			//	System.out.println("please enter car vin number:");
+		//		while ((vin = in.readLine()) == null && vin.length() == 0);
 				System.out.println("please enter a time to reserve a car:");
 				while ((from = in.readLine()) == null && from.length() == 0);
 				
 				time = Integer.parseInt(from);
 				
-				user.reserveCar(user.login, vin, time, con.stmt);
+				user.reserveCar(user.login, time, con.stmt);
 
 				break;
 				
@@ -295,7 +295,7 @@ public class testdriver2 {
 				//while ((year = in.readLine()) == null && year.length() == 0);
 				
 				//TODO Own car from this information2
-				//user.updateCar(user.login, vin, catagory, make, model, year, con.stmt);
+				user.modCar(user.login, vin, catagory, make, model, con.stmt);
 				break;
 				
 			case 3: //Set hours of operation
