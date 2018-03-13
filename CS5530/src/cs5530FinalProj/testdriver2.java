@@ -3,6 +3,7 @@ package cs5530FinalProj;
 
 import java.lang.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.io.*;
 
 public class testdriver2 {
@@ -67,6 +68,7 @@ public class testdriver2 {
 		String choice, username, vin, feedback, fid, score, from, to, model;
 		int time;
 		boolean loggedIn = true;
+		boolean confirm = false;
 		Feedback fb = new Feedback();
 		int c=0;
 		
@@ -74,6 +76,7 @@ public class testdriver2 {
 		while(loggedIn)
 		{
 			displayUserMenu();
+			confirm = true;
 			
 			//Find which option to go to
 			while ((choice = in.readLine()) == null && choice.length() == 0);
@@ -94,14 +97,48 @@ public class testdriver2 {
 			switch (c)
 			{
 			case 1: //Reserve
-			//	System.out.println("please enter car vin number:");
-		//		while ((vin = in.readLine()) == null && vin.length() == 0);
-				System.out.println("please enter a time to reserve a car:");
-				while ((from = in.readLine()) == null && from.length() == 0);
+				ArrayList<Triple> list = new ArrayList<Triple>();
+				ArrayList<Triple> confirmedList = new ArrayList<Triple>();
+				confirm = false;
+				while(!confirm)
+				{
+					System.out.println("please enter a time to reserve a car:");
+					while ((from = in.readLine()) == null && from.length() == 0);
+					
+					time = Integer.parseInt(from);
+					
+					list = user.reserveCar(user.login, time, con.stmt);
+					
+					// Print out list of cars to reserve
+					for (Triple temp : list)
+					{
+						System.out.println(temp.vin);
+					}
+					
+					System.out.println("please enter car vin number to reserve:");
+					while ((vin = in.readLine()) == null && vin.length() == 0);
+					
+					//Stores to confirm later
+					for (Triple temp : list)
+					{
+						if (temp.vin == vin)
+							confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
+					}
+					
+					//Check if user wants to reserve car or not
+					System.out.println("Do you want to reserve another car (Y/N):");
+					while ((choice = in.readLine()) == null && choice.length() == 0);
+					
+					if (choice.equals('N'))
+						break;
+				}
 				
-				time = Integer.parseInt(from);
+				//User Confirmation
+				System.out.println("Do you want to confirm these reservations (Y/N):");
+				while ((choice = in.readLine()) == null && choice.length() == 0);
 				
-				user.reserveCar(user.login, time, con.stmt);
+				if (choice.equals('Y'))
+					user.reserveCarInsert(user.login, confirmedList, con.stmt);
 
 				break;
 				
