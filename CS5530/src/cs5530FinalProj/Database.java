@@ -162,6 +162,9 @@ public class Database
 
 	/////////
 	
+	
+	
+	
 	//this is for problem 2
     public ArrayList reserveCar(String login, int reserveHours, Statement stmt){
 			
@@ -186,7 +189,7 @@ public class Database
 					pid = rs.getString("pid");
 					cost = rs.getString("cost");
 					System.out.println(vin + " " + pid + " " + cost); //testing
-					list.add(new Triple(vin, pid, cost));
+					list.add(new Triple(vin, pid, cost, resHour));
 				}
 
 				rs.close();
@@ -211,9 +214,44 @@ public class Database
 			
 		}
 	
-    public String reserve() {
+    public int reserveCarInsert(String login, ArrayList<Triple> list, Statement s) {
     	
-    	return "";
+    	
+    	for (Triple t : list) {
+    		Date date = new Date(t.time);
+    		String sql = "INSERT INTO Reserve "
+    				+ "VALUES ('" + login + "', '" + t.vin + "', '" + t.pid + "',  '" + t.cost + "', '" + date + "' ) ";
+    	
+    		//	INSERT INTO UC
+    	    //  VALUES ( 001, "sedan" , 'notReal')
+    		
+    		int output = -1;
+    		try
+    		{
+    			output = s.executeUpdate(sql);
+    		}
+    		catch(Exception e)
+    		{
+    			System.out.println("cannot execute the query");
+    			System.out.println(e.getMessage());
+    		}
+
+    		if (output > 0)
+    		{
+    			System.out.println("Car Added");
+    			return 1;
+    		}
+    		else
+    		{
+    			System.out.println("Something went wrong, are you a legitimate User?");
+    			return 0;
+    		} 
+		}
+		return 0;
+    	
+		
+		
+		
     }
     
     
