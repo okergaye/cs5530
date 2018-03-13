@@ -6,10 +6,10 @@ public class Feedback {
 	public Feedback()
 	{}
 	
-	// Feedback will use login as a forgein key so we know what user created the feedback fid primary key
-	public String getFeedback(String login, String fid, Statement stmt)
+	// Feedback will use login as a forgien key so we know what user created the feedback fid primary key
+	public String getFeedback(String vin, Statement stmt)
 	{
-		String sql="select text from UberUser where login = '%"+login+"%' and fid = '%"+fid+"%'";
+		String sql="select text, fid from Feedback where vin = '"+vin+"'";
 		String output="";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -18,7 +18,7 @@ public class Feedback {
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			output += rs.getString("text")+"\n";
+	 			output += rs.getString("text")+" "+rs.getString("fid")+"\n";
 	 		}
 	     
 	 		rs.close();
@@ -42,10 +42,9 @@ public class Feedback {
 	    return output;
 	}
 	
-	public int createFeedback(String fid, String login, String text, String date, Statement stmt)
+	public int createFeedback(String fid, String text, String date, String vin, String login, Statement stmt)
 	{
-		String sql = "insert into Feedback values ('%" + fid + "%', '%" + login + "%', '%" + text + "%',"
-				+ " '%" + date + "%')";
+		String sql = "insert into Feedback values ('" + fid + "', '" + text + "', '" + date + "', '" + vin + "', '" + login + "')";
 		int output = -1;
 		try
 		{
@@ -69,7 +68,8 @@ public class Feedback {
 		} 	
 	}
 	
-	public int rateFeedback(String fid, String login, String score, Statement stmt)
+	//User inputs fid in order to rate that feedback if its the users feedback do not rate his own feedback
+	public int rateFeedback(String login, String fid, String score, Statement stmt)
 	{
 		String sql="select login from Feedback where fid = '%"+fid+"%'";
 		String output="";
@@ -109,7 +109,7 @@ public class Feedback {
 	 	}
 	 	else //User rating others feedback
 	 	{		
-			sql = "insert into Ratings values ('%" + fid + "%', '%" + login + "%', '%" + score + "%')";
+			sql = "insert into Ratings values ('%" + login + "%', '%" + fid + "%', '%" + score + "%')";
 	 		int output2 = -1;
 			try
 			{
