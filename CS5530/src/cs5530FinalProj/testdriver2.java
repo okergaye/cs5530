@@ -120,8 +120,11 @@ public class testdriver2 {
 					//Stores to confirm later
 					for (Triple temp : list)
 					{
-						if (temp.vin == vin)
+						if (temp.vin.equals(vin))
+						{
 							confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
+							System.out.println("added");
+						}
 					}
 					
 					//Check if user wants to reserve car or not
@@ -141,7 +144,10 @@ public class testdriver2 {
 				if (choice.toUpperCase().equals("Y"))
 				{
 					for (Triple temp : confirmedList)
+					{
 						user.reserveCarInsert(user.login, temp.vin, temp.pid, temp.cost, temp.time, con.stmt);
+						System.out.println("called");
+					}
 				}
 
 				break;

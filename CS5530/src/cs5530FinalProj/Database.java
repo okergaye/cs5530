@@ -220,8 +220,9 @@ public class Database
     	
     		Date date = new Date(time);
     		
-    		String sql = "INSERT INTO Reserve "
-    				+ "VALUES ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + date + "' ) ";
+    		//System.out.println("here");
+    		
+    		String sql = "insert into Reserve values ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + date + "')";
     	
     		//	INSERT INTO UC
     	    //  VALUES ( 001, "sedan" , 'notReal')
