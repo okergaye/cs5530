@@ -214,13 +214,14 @@ public class Database
 			
 		}
 	
-    public int reserveCarInsert(String login, ArrayList<Triple> list, Statement s) {
+    public int reserveCarInsert(String login, String vin, String pid, String cost, int time,  Statement s) {
     	
     	
-    	for (Triple t : list) {
-    		Date date = new Date(t.time);
+    	
+    		Date date = new Date(time);
+    		
     		String sql = "INSERT INTO Reserve "
-    				+ "VALUES ('" + login + "', '" + t.vin + "', '" + t.pid + "',  '" + t.cost + "', '" + date + "' ) ";
+    				+ "VALUES ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + date + "' ) ";
     	
     		//	INSERT INTO UC
     	    //  VALUES ( 001, "sedan" , 'notReal')
@@ -246,8 +247,7 @@ public class Database
     			System.out.println("Something went wrong, are you a legitimate User?");
     			return 0;
     		} 
-		}
-		return 0;
+		
     	
 		
 		
