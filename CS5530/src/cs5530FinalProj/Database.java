@@ -15,6 +15,17 @@ public class Database
 	public Database()
 	{}
 	
+	
+	//for 3
+	public void addCar() {
+		
+		
+	}
+	//3 end
+	
+	
+	
+	
 	////////taken from UBERCAR and UBER DRIVER
 	public String getUberDriver(String login, String UUID, Statement stmt)
 	{
