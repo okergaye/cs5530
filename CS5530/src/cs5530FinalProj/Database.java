@@ -1,6 +1,7 @@
 package cs5530FinalProj;
 
 import java.sql.*;
+import java.util.Calendar;
 
 public class Database 
 {
@@ -17,8 +18,75 @@ public class Database
 	
 	
 	//for 3
-	public void addCar() {
+	public int addCar(String login, String vin, String cat, String make, String model, Statement s ) {
+
+	
+		//Get the user info and make sure there is only 1
 		
+		String sql = "INSERT INTO UC "
+				+ "VALUES ('" + vin + "' '" + cat + "' '" + login + "'  '" + make + "' '" + model + "' ) ";
+	
+		//	INSERT INTO UC
+	    //  VALUES ( 001, "sedan" , 'notReal')
+		
+		int output = -1;
+		try
+		{
+			output = s.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Car Added");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Something went wrong, are you a legitimate User?");
+			return 0;
+		} 
+		
+		
+		
+	}
+	
+	//this should ask the user for a vin, and then return t
+	public int modCar(String login, String vin, String cat, String make, String model, Statement s ) {
+		
+		String sql = "MODIFY UC "
+				+ "SET category = '" + cat + "', make = '" + make + "', model = '" + model + "' "
+						+ "WHERE vin = '" + vin + "' ";
+	
+	//	UPDATE Customers
+	//	SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+	//	WHERE CustomerID = 1;
+		
+		int output = -1;
+		try
+		{
+			output = s.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Car Updated");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Something went wrong, did you input the correct vin?");
+			return 0;
+		} 
 		
 	}
 	//3 end
@@ -95,8 +163,18 @@ public class Database
 			String vin, pid;
 			int resHour = reserveHours;
 			//Get the user info and make sure there is only 1
+				Date test = new Date(2);
+				test.getHours();
+				test.getDate();
+				//test.
+				Calendar test3; // =  Calendar().getInstance();
+				//test3.set
+				Timestamp time = new Timestamp(resHour);
+				//time.getHours();
 				
-			
+			//	String sql = "INSERT INTO UC "
+			//			+ "VALUES ('" + vin + "' '" + cat + "' '" + login + "'  '" + make + "' '" + model + "' ) ";
+				
 			String sql = "select vin, A.pid from Period P,Available A,UC C where "
 					+ "P.pid = A.pid and A.login = C.login and fromHour < '" + resHour + "' and toHour > '" + resHour + "'";
 		//	select vin, A.pid from Period P,Available A,UC C where fromHour < 2 and toHour > 2 and P.pid = A.pid and A.login = C.login;
@@ -136,6 +214,13 @@ public class Database
 			
 		}
 	
+    public String reserve() {
+    	
+    	return "";
+    }
+    
+    
+    
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
 		String sql;
