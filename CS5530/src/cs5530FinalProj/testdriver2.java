@@ -129,15 +129,17 @@ public class testdriver2 {
 					System.out.println("Do you want to reserve another car (Y/N):");
 					while ((choice = in.readLine()) == null && choice.length() == 0);
 					
-					if (choice.equals('N'))
+					if (!choice.toUpperCase().equals('Y')) {
+						confirm = true;
 						break;
+					}
 				}
 				
 				//User Confirmation
 				System.out.println("Do you want to confirm these reservations (Y/N):");
 				while ((choice = in.readLine()) == null && choice.length() == 0);
 				
-				if (choice.equals('Y'))
+				if (choice.toUpperCase().equals('Y'))
 					user.reserveCarInsert(user.login, confirmedList, con.stmt);
 
 				break;
