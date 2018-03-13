@@ -3,6 +3,7 @@ package cs5530FinalProj;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 
@@ -166,7 +167,7 @@ public class Database
 	
 	
 	//this is for problem 2
-    public ArrayList reserveCar(String login, int reserveHours, Statement stmt){
+    public ArrayList<Triple> reserveCar(String login, int reserveHours, Statement stmt){
 			
     		
     		ArrayList<Triple> list = new ArrayList<Triple>();
@@ -217,12 +218,14 @@ public class Database
     public int reserveCarInsert(String login, String vin, String pid, String cost, int time,  Statement s) {
     	
     	
-    	
-    		Date date = new Date(time);
-    		
+    	Calendar date = new GregorianCalendar();
+    	Date test1 = new Date(date.getTimeInMillis() + time);
+    	// reset hour, minutes, seconds and millis
+    
+    		System.out.println(date.get(0));
     		//System.out.println("here");
     		
-    		String sql = "insert into Reserve values ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + date + "')";
+    		String sql = "insert into Reserve values ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + test1 + "')";
     	
     		//	INSERT INTO UC
     	    //  VALUES ( 001, "sedan" , 'notReal')
