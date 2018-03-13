@@ -76,7 +76,6 @@ public class testdriver2 {
 		while(loggedIn)
 		{
 			displayUserMenu();
-			confirm = true;
 			
 			//Find which option to go to
 			while ((choice = in.readLine()) == null && choice.length() == 0);
@@ -129,7 +128,7 @@ public class testdriver2 {
 					System.out.println("Do you want to reserve another car (Y/N):");
 					while ((choice = in.readLine()) == null && choice.length() == 0);
 					
-					if (!choice.toUpperCase().equals('Y')) {
+					if (choice.toUpperCase().equals("N")) {
 						confirm = true;
 						break;
 					}
@@ -139,8 +138,11 @@ public class testdriver2 {
 				System.out.println("Do you want to confirm these reservations (Y/N):");
 				while ((choice = in.readLine()) == null && choice.length() == 0);
 				
-				if (choice.toUpperCase().equals('Y'))
-					user.reserveCarInsert(user.login, confirmedList, con.stmt);
+				if (choice.toUpperCase().equals("Y"))
+				{
+					for (Triple temp : confirmedList)
+						user.reserveCarInsert(user.login, temp.vin, temp.pid, temp.cost, temp.time, con.stmt);
+				}
 
 				break;
 				
