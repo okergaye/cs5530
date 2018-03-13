@@ -79,7 +79,7 @@ public class Database
 	/////////
 	
 	//this is for problem 2
-		public void reserveCar(String login, int reserveHours, Statement stmt){
+    public void reserveCar(String login, int reserveHours, Statement stmt){
 			
 			String vin, pid;
 			int resHour = reserveHours;

@@ -46,7 +46,7 @@ public class testdriver2 {
 	public static void displayDriverMenu()
 	{
 		System.out.println("        Welcome to UUber System     ");
-		System.out.println("1. Own a UberCar:");
+		System.out.println("1. Add a UberCar:");
 		System.out.println("2. Set Hours of Op:");
 		System.out.println("3. Logout:");
 		System.out.println("pleasse enter your choice:");
@@ -182,6 +182,8 @@ public class testdriver2 {
 		while(loggedIn)
 		{
 			displayDriverMenu();
+			
+			//get choice
 			while ((choice = in.readLine()) == null && choice.length() == 0);
 			try
 			{
@@ -191,6 +193,8 @@ public class testdriver2 {
 			{	 
 				continue;
 			}
+			
+			// is in bounds
 			if (c<1 | c>8)
 				continue;
 			
@@ -201,7 +205,8 @@ public class testdriver2 {
 				System.out.println("please enter car vin number:");
 				while ((vin = in.readLine()) == null && vin.length() == 0);
 				
-				// Own car from this information
+				//TODO Own car from this information2
+				//user.addCar(user.login, vin, catagory, con.stmt);
 				break;
 				
 			case 2: //Set hours of operation
