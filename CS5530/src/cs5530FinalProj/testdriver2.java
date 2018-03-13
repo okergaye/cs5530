@@ -34,12 +34,17 @@ public class testdriver2 {
 		System.out.println("        Welcome to UUber System     ");
 		System.out.println("1. Reserve a UberCar:");
 		System.out.println("2. Favorite UberCar:");
-		System.out.println("3. Write Feedback for UberCar:");
-		System.out.println("4. View Feedback for UberCar:");
-		System.out.println("5. Rate Feedback:");
-		System.out.println("6. Set User to Trusted:");
-		System.out.println("7. Set User to Not Trusted:");
-		System.out.println("8. Logout:");
+		System.out.println("3. Record a Ride:");
+		System.out.println("4. Write Feedback for UberCar:");
+		System.out.println("5. View Feedback for UberCar:");
+		System.out.println("6. Rate Feedback:");
+		System.out.println("7. Set User to Trusted:");
+		System.out.println("8. Set User to Not Trusted:");
+		System.out.println("9. Browse UC:");
+		System.out.println("10. Two Degrees of Seperation:");
+		System.out.println("11. Statistics:");
+		System.out.println("12. User Awards (admin only):");
+		System.out.println("13. Logout:");
 		System.out.println("pleasse enter your choice:");
 	}
 	
@@ -47,8 +52,9 @@ public class testdriver2 {
 	{
 		System.out.println("        Welcome to UUber System     ");
 		System.out.println("1. Add a UberCar:");
-		System.out.println("2. Set Hours of Op:");
-		System.out.println("3. Logout:");
+		System.out.println("2. Update a UberCar:");
+		System.out.println("3. Set Hours of Op:");
+		System.out.println("4. Logout:");
 		System.out.println("pleasse enter your choice:");
 	}
 	//end of console write line menues
@@ -58,18 +64,18 @@ public class testdriver2 {
 	
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice;
-		String username;
-		String vin;
-		String feedback;
-		String fid;
-		String score;
+		String choice, username, vin, feedback, fid, score, from, to, model;
+		int time;
 		boolean loggedIn = true;
 		Feedback fb = new Feedback();
 		int c=0;
+		
+		// Start loop
 		while(loggedIn)
 		{
 			displayUserMenu();
+			
+			//Find which option to go to
 			while ((choice = in.readLine()) == null && choice.length() == 0);
 			try
 			{
@@ -79,20 +85,24 @@ public class testdriver2 {
 			{	 
 				continue;
 			}
-			if (c<1 | c>8)
+			
+			//Check if in bounds
+			if (c<1 | c>13)
 				continue;
 			
 			//Switch case for all the options
 			switch (c)
 			{
 			case 1: //Reserve
+				System.out.println("please enter car vin number:");
+				while ((vin = in.readLine()) == null && vin.length() == 0);
+				System.out.println("please enter a time to reserve a car:");
+				while ((from = in.readLine()) == null && from.length() == 0);
 				
+				time = Integer.parseInt(from);
 				
-				
-				
-				user.reserveCar(user.login, 2 , con.stmt);
-				
-				
+				user.reserveCar(user.login, vin, time, con.stmt);
+
 				break;
 				
 			case 2: // Favorite
@@ -103,23 +113,36 @@ public class testdriver2 {
 				
 				break;
 				
-			case 3: // Write Feedback
+			case 3: // Record a Ride
+				System.out.println("please enter car vin number:");
+				while ((vin = in.readLine()) == null && vin.length() == 0);
+				System.out.println("please enter your start time:");
+				while ((from = in.readLine()) == null && from.length() == 0);
+				System.out.println("please enter car vin number:");
+				while ((to = in.readLine()) == null && to.length() == 0);
+				
+				//user.RecordRide(vin, from, to, con.stmt);
+				
+				break;
+				
+			case 4: // Write Feedback
 				System.out.println("please enter car vin number:");
 				while ((vin = in.readLine()) == null && vin.length() == 0);
 				System.out.println("please enter your feedback:");
 				while ((feedback = in.readLine()) == null && feedback.length() == 0);
 				
 				//Feedback creation here
+				//fb.createFeedback(feedback, vin, user.login, con.stmt);
 				break;
 				
-			case 4: // View Feedback
+			case 5: // View Feedback
 				System.out.println("please enter car vin number:");
 				while ((vin = in.readLine()) == null && vin.length() == 0);
 				
 				fb.getFeedback(vin, con.stmt);
 				break;
 				
-			case 5: // Rate Feedback
+			case 6: // Rate Feedback
 				System.out.println("please enter fid number to rate feedback:");
 				while ((fid = in.readLine()) == null && fid.length() == 0);
 				System.out.println("please enter 0 (useless), 1 (useful), or 2 (very useful):");
@@ -128,7 +151,7 @@ public class testdriver2 {
 				fb.rateFeedback(user.login, fid, score, con.stmt);
 				break;
 				
-			case 6: //Trust a user
+			case 7: //Trust a user
 				System.out.println("please enter other username:");
 				while ((username = in.readLine()) == null && username.length() == 0);
 				
@@ -143,7 +166,7 @@ public class testdriver2 {
 				
 				break;
 				
-			case 7: //Do not trust a user
+			case 8: //Do not trust a user
 				System.out.println("please enter other username:");
 				while ((username = in.readLine()) == null && username.length() == 0);
 				
@@ -158,7 +181,50 @@ public class testdriver2 {
 				
 				break;
 				
-			case 8: //Logging out
+			case 9: //Browsing UC
+				System.out.println("please enter car model:");
+				while ((model = in.readLine()) == null && model.length() == 0);
+				System.out.println("Sorting order:");
+				System.out.println("(a) average numerical score of feedbacks:");
+				System.out.println("(b) average numerical score of trusted users feedbacks:");
+				System.out.println("please enter your choice:");
+				while ((choice = in.readLine()) == null && choice.length() == 0);
+				
+				//user.BrowseUC(model, choice, con.stmt);
+				
+				break;
+				
+			case 10: //2DoS
+				System.out.println("please enter other username:");
+				while ((username = in.readLine()) == null && username.length() == 0);
+				
+				//user.TwoDegreesOfSeperation(user.login, username, con.stmt);
+				break;
+				
+			case 11: //Stats
+				System.out.println("Statistics:");
+				System.out.println("(a) Most popular UC for each catagory:");
+				System.out.println("(b) Most expensive UC for each catagory:");
+				System.out.println("(c) Highest Rating UC for each catagory:");
+				System.out.println("please enter your choice:");
+				while ((choice = in.readLine()) == null && choice.length() == 0);
+				
+				//user.statShow(choice, con.stmt);
+				
+				break;
+				
+			case 12: //User Awards
+				System.out.println("User Award:");
+				System.out.println("(a) Most trusted user:");
+				System.out.println("(b) Most useful user:");
+				System.out.println("please enter your choice:");
+				while ((choice = in.readLine()) == null && choice.length() == 0);
+				
+				//user.award(choice, con.stmt);
+				
+				break;
+				
+			case 13: //Logging out
 				user.logout();
 				loggedIn = false;
 				System.out.println("Logging out.");
@@ -172,13 +238,12 @@ public class testdriver2 {
 	
 	public static void startDriver(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice;
-		String vin;
-		String from;
-		String to;
+		String choice, vin, from, to, catagory, make, model, year;
 		boolean loggedIn = true;
 		Feedback fb = new Feedback();
 		int c=0;
+		
+		//Start of loop
 		while(loggedIn)
 		{
 			displayDriverMenu();
@@ -201,15 +266,39 @@ public class testdriver2 {
 			//Switch case for all the options
 			switch (c)
 			{
-			case 1: //Own a car
+			case 1: //Add a car
 				System.out.println("please enter car vin number:");
 				while ((vin = in.readLine()) == null && vin.length() == 0);
+				System.out.println("please enter car catagory:");
+				while ((catagory = in.readLine()) == null && catagory.length() == 0);
+				System.out.println("please enter car make:");
+				while ((make = in.readLine()) == null && make.length() == 0);
+				System.out.println("please enter car model:");
+				while ((model = in.readLine()) == null && model.length() == 0);
+				//System.out.println("please enter car year:");
+				//while ((year = in.readLine()) == null && year.length() == 0);
 				
 				//TODO Own car from this information2
-				//user.addCar(user.login, vin, catagory, con.stmt);
+				user.addCar(user.login, vin, catagory, make, model, con.stmt);
 				break;
 				
-			case 2: //Set hours of operation
+			case 2: //Update a car
+				System.out.println("please enter car vin number:");
+				while ((vin = in.readLine()) == null && vin.length() == 0);
+				System.out.println("please enter car catagory:");
+				while ((catagory = in.readLine()) == null && catagory.length() == 0);
+				System.out.println("please enter car make:");
+				while ((make = in.readLine()) == null && make.length() == 0);
+				System.out.println("please enter car model:");
+				while ((model = in.readLine()) == null && model.length() == 0);
+				//System.out.println("please enter car year:");
+				//while ((year = in.readLine()) == null && year.length() == 0);
+				
+				//TODO Own car from this information2
+				//user.updateCar(user.login, vin, catagory, make, model, year, con.stmt);
+				break;
+				
+			case 3: //Set hours of operation
 				System.out.println("please enter your starting time:");
 				while ((from = in.readLine()) == null && from.length() == 0);
 				System.out.println("please enter your ending time:");
@@ -219,7 +308,7 @@ public class testdriver2 {
 				
 				break;
 				
-			case 3:
+			case 4:
 				user.logout();
 				loggedIn = false;
 				System.out.println("Logging out.");

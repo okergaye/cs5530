@@ -42,9 +42,9 @@ public class Feedback {
 	    return output;
 	}
 	
-	public int createFeedback(String fid, String text, String date, String vin, String login, Statement stmt)
+	public int createFeedback(String text, String date, String vin, String login, Statement stmt)
 	{
-		String sql = "insert into Feedback values ('" + fid + "', '" + text + "', '" + date + "', '" + vin + "', '" + login + "')";
+		String sql = "insert into Feedback values ('" + 0 + ", '" + text + "', '" + date + "', '" + vin + "', '" + login + "')";
 		int output = -1;
 		try
 		{
