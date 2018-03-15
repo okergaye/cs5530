@@ -23,6 +23,62 @@ public class Database
 	{}
 	
 	
+	
+	//problem 4 area
+	public String getRide(String login,String vin, int fromHour, int toHour){
+		Calendar cal = new GregorianCalendar();
+    	Date date = new Date(cal.getTimeInMillis());
+		int cost = toHour - fromHour;
+		String values = "VALUES ('" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
+		return values;
+	}
+	public int insertRide(String values, Statement s){
+
+		String sql = "INSERT INTO Ride "
+				+ values;
+	
+		//	INSERT INTO UC
+	    //  VALUES ( 001, "sedan" , 'notReal')
+		
+		int output = -1;
+		try
+		{
+			output = s.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Ride Added");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Something went wrong, could be anything?");
+			return 0;
+		} 
+	}
+	//problem 4 area end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//for 3
 	public int addCar(String login, String vin, String cat, String make, String model, Statement s ) {
 
