@@ -29,7 +29,7 @@ public class Database
 		Calendar cal = new GregorianCalendar();
     	Date date = new Date(cal.getTimeInMillis());
 		int cost = toHour - fromHour;
-		String values = "VALUES ('" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
+		String values = "VALUES ('" + 0 + "','" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
 		return values;
 	}
 	public int insertRide(String values, Statement s){
