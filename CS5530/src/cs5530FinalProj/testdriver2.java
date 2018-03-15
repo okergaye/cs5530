@@ -124,7 +124,12 @@ public class testdriver2 {
 					to = in.readLine();
 					
 					temp = user.getRide(user.login, vin, from, to);
-					rideList.add(temp);
+					
+					//Check if the car was available at that time or not
+					if (temp == null)
+						System.out.println("Ride was not avaliable at that time");
+					else // Car was available
+						rideList.add(temp);
 					
 					System.out.println("Do you want to add another car (Y/N):");
 					choice = in.readLine();
