@@ -96,59 +96,7 @@ public class testdriver2 {
 			switch (c)
 			{
 			case 1: //Reserve
-				ArrayList<Triple> list = new ArrayList<Triple>();
-				ArrayList<Triple> confirmedList = new ArrayList<Triple>();
-				confirm = false;
-				while(!confirm)
-				{
-					System.out.println("please enter a time to reserve a car:");
-					from = in.readLine();
-					
-					time = Integer.parseInt(from);
-					
-					list = user.reserveCar(user.login, time, con.stmt);
-					
-					// Print out list of cars to reserve
-					for (Triple temp : list)
-					{
-						System.out.println(temp.vin);
-					}
-					
-					System.out.println("please enter car vin number to reserve:");
-					vin = in.readLine();
-					
-					//Stores to confirm later
-					for (Triple temp : list)
-					{
-						if (temp.vin.equals(vin))
-						{
-							confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
-							System.out.println("added");
-						}
-					}
-					
-					//Check if user wants to reserve car or not
-					System.out.println("Do you want to reserve another car (Y/N):");
-					choice = in.readLine();
-					
-					if (choice.toUpperCase().equals("N")) {
-						confirm = true;
-						break;
-					}
-				}
-				
-				//User Confirmation
-				System.out.println("Do you want to confirm these reservations (Y/N):");
-				choice = in.readLine();
-				
-				if (choice.toUpperCase().equals("Y"))
-				{
-					for (Triple temp : confirmedList)
-					{
-						user.reserveCarInsert(user.login, temp.vin, temp.pid, temp.cost, temp.time, con.stmt);
-						System.out.println("called");
-					}
-				}
+				reserve(in, con, user);
 
 				break;
 				
@@ -281,6 +229,67 @@ public class testdriver2 {
 		
 		//Switch to main menu
 		mainMenu(in, con, user);
+	}
+
+	private static void reserve(BufferedReader in, Connector con, Database user) throws IOException {
+		String choice;
+		String vin;
+		String from;
+		int time;
+		boolean confirm;
+		ArrayList<Triple> list = new ArrayList<Triple>();
+		ArrayList<Triple> confirmedList = new ArrayList<Triple>();
+		confirm = false;
+		while(!confirm)
+		{
+			System.out.println("please enter a time to reserve a car:");
+			from = in.readLine();
+			
+			time = Integer.parseInt(from);
+			
+			list = user.reserveCar(user.login, time, con.stmt);
+			
+			// Print out list of cars to reserve
+			for (Triple temp : list)
+			{
+				System.out.println(temp.vin);
+			}
+			
+			System.out.println("please enter car vin number to reserve:");
+			vin = in.readLine();
+			
+			//Stores to confirm later
+			for (Triple temp : list)
+			{
+				if (temp.vin.equals(vin))
+				{
+					confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
+					System.out.println("added");
+				}
+			}
+			
+			//Check if user wants to reserve car or not
+			System.out.println("Do you want to reserve another car (Y/N):");
+			choice = in.readLine();
+			
+			if (choice.toUpperCase().equals("N")) {
+				confirm = true;
+				break;
+			}
+		}
+		
+		//User Confirmation
+		System.out.println("Do you want to confirm these reservations (Y/N):");
+		choice = in.readLine();
+		
+		if (choice.toUpperCase().equals("Y"))
+		{
+			for (Triple temp : confirmedList)
+			{
+				user.reserveCarInsert(user.login, temp.vin, temp.pid, temp.cost, temp.time, con.stmt);
+				System.out.println("called");
+			}
+		}
 	}
 	
 	public static void startDriver(BufferedReader in, Connector con, Database user) throws IOException
