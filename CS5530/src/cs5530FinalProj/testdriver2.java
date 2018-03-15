@@ -123,7 +123,7 @@ public class testdriver2 {
 					System.out.println("please enter car vin number:");
 					to = in.readLine();
 					
-					temp = user.getRide(user.login, vin, from, to, con.stmt);
+					temp = user.getRide(user.login, vin, from, to);
 					rideList.add(temp);
 					
 					System.out.println("Do you want to add another car (Y/N):");
@@ -139,7 +139,7 @@ public class testdriver2 {
 				//Print rides to record
 				for(String s : rideList)
 				{
-					System.out.println(s);
+					System.out.println(s, con.stmt);
 				}
 				
 				System.out.println("Do you want to confirm these rides (Y/N):");
