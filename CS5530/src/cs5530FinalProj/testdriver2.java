@@ -109,14 +109,51 @@ public class testdriver2 {
 				break;
 				
 			case 3: // Record a Ride
-				System.out.println("please enter car vin number:");
-				vin = in.readLine();
-				System.out.println("please enter your start time:");
-				from = in.readLine();
-				System.out.println("please enter car vin number:");
-				to = in.readLine();
+				ArrayList<String> rideList = new ArrayList<String>();
+				String temp;
+				boolean goOn = true;
 				
-				//user.RecordRide(vin, from, to, con.stmt);
+				//Loop to add cars
+				while (goOn)
+				{
+					System.out.println("please enter car vin number:");
+					vin = in.readLine();
+					System.out.println("please enter your start time:");
+					from = in.readLine();
+					System.out.println("please enter car vin number:");
+					to = in.readLine();
+					
+					temp = user.getRide(user.login, vin, from, to, con.stmt);
+					rideList.add(temp);
+					
+					System.out.println("Do you want to add another car (Y/N):");
+					choice = in.readLine();
+					
+					//Check to end loop
+					if (choice.toUpperCase().equals("N"))
+					{
+						goOn = false;
+					}
+				}
+				
+				//Print rides to record
+				for(String s : rideList)
+				{
+					System.out.println(s);
+				}
+				
+				System.out.println("Do you want to confirm these rides (Y/N):");
+				choice = in.readLine();
+				
+				//If they confirm the rides insert into table
+				if(choice.toUpperCase().equals("Y"))
+				{
+					//Insert cars into the tables
+					for(String s : rideList)
+					{
+						user.insertRide(s);
+					}
+				}
 				
 				break;
 				
