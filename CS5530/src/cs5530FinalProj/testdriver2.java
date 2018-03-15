@@ -78,7 +78,7 @@ public class testdriver2 {
 			displayUserMenu();
 			
 			//Find which option to go to
-			while ((choice = in.readLine()) == null && choice.length() == 0);
+			choice = in.readLine();
 			try
 			{
 				c = Integer.parseInt(choice);
@@ -102,7 +102,7 @@ public class testdriver2 {
 				while(!confirm)
 				{
 					System.out.println("please enter a time to reserve a car:");
-					while ((from = in.readLine()) == null && from.length() == 0);
+					from = in.readLine();
 					
 					time = Integer.parseInt(from);
 					
@@ -115,7 +115,7 @@ public class testdriver2 {
 					}
 					
 					System.out.println("please enter car vin number to reserve:");
-					while ((vin = in.readLine()) == null && vin.length() == 0);
+					vin = in.readLine();
 					
 					//Stores to confirm later
 					for (Triple temp : list)
@@ -129,7 +129,7 @@ public class testdriver2 {
 					
 					//Check if user wants to reserve car or not
 					System.out.println("Do you want to reserve another car (Y/N):");
-					while ((choice = in.readLine()) == null && choice.length() == 0);
+					choice = in.readLine();
 					
 					if (choice.toUpperCase().equals("N")) {
 						confirm = true;
@@ -139,7 +139,7 @@ public class testdriver2 {
 				
 				//User Confirmation
 				System.out.println("Do you want to confirm these reservations (Y/N):");
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				
 				if (choice.toUpperCase().equals("Y"))
 				{
@@ -154,7 +154,7 @@ public class testdriver2 {
 				
 			case 2: // Favorite
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				
 				user.favoriteCar(vin, user.login, con.stmt);
 				
@@ -162,11 +162,11 @@ public class testdriver2 {
 				
 			case 3: // Record a Ride
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				System.out.println("please enter your start time:");
-				while ((from = in.readLine()) == null && from.length() == 0);
+				from = in.readLine();
 				System.out.println("please enter car vin number:");
-				while ((to = in.readLine()) == null && to.length() == 0);
+				to = in.readLine();
 				
 				//user.RecordRide(vin, from, to, con.stmt);
 				
@@ -174,9 +174,9 @@ public class testdriver2 {
 				
 			case 4: // Write Feedback
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				System.out.println("please enter your feedback:");
-				while ((feedback = in.readLine()) == null && feedback.length() == 0);
+				feedback = in.readLine();
 				
 				//Feedback creation here
 				fb.createFeedback(feedback, vin, user.login, con.stmt);
@@ -184,23 +184,23 @@ public class testdriver2 {
 				
 			case 5: // View Feedback
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				
 				fb.getFeedback(vin, con.stmt);
 				break;
 				
 			case 6: // Rate Feedback
 				System.out.println("please enter fid number to rate feedback:");
-				while ((fid = in.readLine()) == null && fid.length() == 0);
+				fid = in.readLine();
 				System.out.println("please enter 0 (useless), 1 (useful), or 2 (very useful):");
-				while ((score = in.readLine()) == null && score.length() == 0);
+				score = in.readLine();
 				
 				fb.rateFeedback(user.login, fid, score, con.stmt);
 				break;
 				
 			case 7: //Trust a user
 				System.out.println("please enter other username:");
-				while ((username = in.readLine()) == null && username.length() == 0);
+				username = in.readLine();
 				
 				if (user.userExists(username, con.stmt) == 1)
 				{
@@ -215,7 +215,7 @@ public class testdriver2 {
 				
 			case 8: //Do not trust a user
 				System.out.println("please enter other username:");
-				while ((username = in.readLine()) == null && username.length() == 0);
+				username = in.readLine();
 				
 				if (user.userExists(username, con.stmt) == 1)
 				{
@@ -230,12 +230,12 @@ public class testdriver2 {
 				
 			case 9: //Browsing UC
 				System.out.println("please enter car model:");
-				while ((model = in.readLine()) == null && model.length() == 0);
+				model = in.readLine();
 				System.out.println("Sorting order:");
 				System.out.println("(a) average numerical score of feedbacks:");
 				System.out.println("(b) average numerical score of trusted users feedbacks:");
 				System.out.println("please enter your choice:");
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				
 				//user.BrowseUC(model, choice, con.stmt);
 				
@@ -243,7 +243,7 @@ public class testdriver2 {
 				
 			case 10: //2DoS
 				System.out.println("please enter other username:");
-				while ((username = in.readLine()) == null && username.length() == 0);
+				username = in.readLine();
 				
 				//user.TwoDegreesOfSeperation(user.login, username, con.stmt);
 				break;
@@ -254,7 +254,7 @@ public class testdriver2 {
 				System.out.println("(b) Most expensive UC for each catagory:");
 				System.out.println("(c) Highest Rating UC for each catagory:");
 				System.out.println("please enter your choice:");
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				
 				//user.statShow(choice, con.stmt);
 				
@@ -265,7 +265,7 @@ public class testdriver2 {
 				System.out.println("(a) Most trusted user:");
 				System.out.println("(b) Most useful user:");
 				System.out.println("please enter your choice:");
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				
 				//user.award(choice, con.stmt);
 				
@@ -287,7 +287,6 @@ public class testdriver2 {
 	{
 		String choice, vin, from, to, catagory, make, model, year;
 		boolean loggedIn = true;
-		Feedback fb = new Feedback();
 		int c=0;
 		
 		//Start of loop
@@ -296,7 +295,7 @@ public class testdriver2 {
 			displayDriverMenu();
 			
 			//get choice
-			while ((choice = in.readLine()) == null && choice.length() == 0);
+			choice = in.readLine();
 			try
 			{
 				c = Integer.parseInt(choice);
@@ -315,13 +314,13 @@ public class testdriver2 {
 			{
 			case 1: //Add a car
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				System.out.println("please enter car catagory:");
-				while ((catagory = in.readLine()) == null && catagory.length() == 0);
+				catagory = in.readLine();
 				System.out.println("please enter car make:");
-				while ((make = in.readLine()) == null && make.length() == 0);
+				make = in.readLine();
 				System.out.println("please enter car model:");
-				while ((model = in.readLine()) == null && model.length() == 0);
+				model = in.readLine();
 				//System.out.println("please enter car year:");
 				//while ((year = in.readLine()) == null && year.length() == 0);
 				
@@ -331,13 +330,13 @@ public class testdriver2 {
 				
 			case 2: //Update a car
 				System.out.println("please enter car vin number:");
-				while ((vin = in.readLine()) == null && vin.length() == 0);
+				vin = in.readLine();
 				System.out.println("please enter car catagory:");
-				while ((catagory = in.readLine()) == null && catagory.length() == 0);
+				catagory = in.readLine();
 				System.out.println("please enter car make:");
-				while ((make = in.readLine()) == null && make.length() == 0);
+				make = in.readLine();
 				System.out.println("please enter car model:");
-				while ((model = in.readLine()) == null && model.length() == 0);
+				model = in.readLine();
 				//System.out.println("please enter car year:");
 				//while ((year = in.readLine()) == null && year.length() == 0);
 				
@@ -347,9 +346,9 @@ public class testdriver2 {
 				
 			case 3: //Set hours of operation
 				System.out.println("please enter your starting time:");
-				while ((from = in.readLine()) == null && from.length() == 0);
+				from = in.readLine();
 				System.out.println("please enter your ending time:");
-				while ((to = in.readLine()) == null && to.length() == 0);
+				to = in.readLine();
 				
 				//Set the hours of operation for the ud from this information
 				
@@ -382,7 +381,7 @@ public class testdriver2 {
 		while(active)
 		{
 			displayMenu();
-			while ((choice = in.readLine()) == null && choice.length() == 0);
+			choice = in.readLine();
 			try
 			{
 				c = Integer.parseInt(choice);
@@ -393,13 +392,15 @@ public class testdriver2 {
 			}
 			if (c<1 | c>3)
 				continue;
+			
+			// Switch Case
 			switch(c)
 			{
-			case 1:
+			case 1: //Registration
 				displayUserTypeMenu();
 		    	
 				// Check if user registration for standard or driver
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				try
 				{
 					c = Integer.parseInt(choice);
@@ -413,21 +414,24 @@ public class testdriver2 {
 				if (c > 3 || c < 1)
 					continue;
 				
-				int loginCheck = 0;
+				//get out
+				if (c == 3)
+				{
+					active = false;
+					break;
+				}
 				
 				System.out.println("please enter your name:");
-				while ((name = in.readLine()) == null && name.length() == 0);
+				name = in.readLine();
 				System.out.println("please enter your address:");
-				while ((address = in.readLine()) == null && address.length() == 0);
+				address = in.readLine();
 				System.out.println("please enter your phone:");
-				while ((phone = in.readLine()) == null && phone.length() == 0);
+				phone = in.readLine();
 				System.out.println("Login:");
-				while ((login = in.readLine()) == null && login.length() == 0);
+				login = in.readLine();
 				//Verify unique login here
 				System.out.println("Password:");
-				while ((password = in.readLine()) == null && password.length() == 0);
-				
-				int created;
+				password = in.readLine();
 				
 				if (c == 1) //Register to standard user
 				{
@@ -439,11 +443,11 @@ public class testdriver2 {
 				}
 				break;
 				
-			case 2:
+			case 2: //Login
 				displayUserTypeMenu();
 		    	
 				// Check if user registration for standard or driver
-				while ((choice = in.readLine()) == null && choice.length() == 0);
+				choice = in.readLine();
 				try
 				{
 					c = Integer.parseInt(choice);
@@ -457,10 +461,16 @@ public class testdriver2 {
 				if (c > 3 || c < 1)
 					continue;
 				
+				if (c==3)
+				{
+					active = false;
+					break;
+				}
+				
 				System.out.println("Login:");
-				while ((login = in.readLine()) == null && login.length() == 0);
+				login = in.readLine();
 				System.out.println("Password:");
-				while ((password = in.readLine()) == null && password.length() == 0);
+				password = in.readLine();
 				
 				if (c == 1)
 					user.verifyLogin(login, password, "user", con.stmt);
@@ -481,7 +491,7 @@ public class testdriver2 {
 					break;
 				}
 				
-			case 3:
+			case 3: //Exit
 				active = false;
 				break;
 			}
@@ -492,8 +502,6 @@ public class testdriver2 {
 		System.out.println("Example for cs5530");
 		Connector con=null;
 		Database data = new Database();
-		String choice;
-        int c=0;
         try
 		{
 			//remember to replace the password
