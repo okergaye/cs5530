@@ -25,10 +25,10 @@ public class Database
 	
 	
 	//problem 4 area
-	public String getRide(String login,String vin, int fromHour, int toHour){
+	public String getRide(String login, String vin, String fromHour, String toHour){
 		Calendar cal = new GregorianCalendar();
     	Date date = new Date(cal.getTimeInMillis());
-		int cost = toHour - fromHour;
+		int cost = Integer.parseInt(toHour) - Integer.parseInt(fromHour);
 		String values = "VALUES ('" + 0 + "','" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
 		return values;
 	}

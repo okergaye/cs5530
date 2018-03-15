@@ -139,7 +139,7 @@ public class testdriver2 {
 				//Print rides to record
 				for(String s : rideList)
 				{
-					System.out.println(s, con.stmt);
+					System.out.println(s);
 				}
 				
 				System.out.println("Do you want to confirm these rides (Y/N):");
@@ -151,7 +151,7 @@ public class testdriver2 {
 					//Insert cars into the tables
 					for(String s : rideList)
 					{
-						user.insertRide(s);
+						user.insertRide(s, con.stmt);
 					}
 				}
 				
