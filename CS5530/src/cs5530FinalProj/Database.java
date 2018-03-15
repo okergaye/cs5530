@@ -25,11 +25,52 @@ public class Database
 	
 	
 	//problem 4 area
-	public String getRide(String login, String vin, String fromHour, String toHour){
+	public String getRide(String login, String vin, String fromHour, String toHour, Statement s){
 		Calendar cal = new GregorianCalendar();
     	Date date = new Date(cal.getTimeInMillis());
 		int cost = Integer.parseInt(toHour) - Integer.parseInt(fromHour);
-		String values = "VALUES ('" + 0 + "','" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
+		String values = null;
+		String count = null;
+		//check if that string will work
+		String sql = "Select count(*) as C from Period P WHERE P.pid = "
+				+ "(SELECT A.pid from Available A where login = "
+				+ "(SELECT UC.login from UC where UC.vin = '" + vin + "')) "
+				+ "and P.fromHour > '" + fromHour + "' and P.toHour < '" + toHour + "'";
+
+		// get maybe available pid, this will catch exceptions
+		ResultSet rs=null;
+		try
+		{
+			rs=s.executeQuery(sql);
+			while (rs.next())
+			{
+				count = rs.getString("C");
+			}
+			rs.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+		}
+		finally
+		{
+			try{
+				if (rs!=null && !rs.isClosed())
+					rs.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("cannot close resultset");
+			}
+		} 
+		
+		if(Integer.parseInt(count) != 0) {
+			
+			values = "VALUES ('" + 0 + "','" + cost + "', '" + date + "', '" + login + "',  '" + vin + "', '" + fromHour + "','" + toHour + "' ) ";
+		}
+		
+		
+		
 		return values;
 	}
 	public int insertRide(String values, Statement s){
