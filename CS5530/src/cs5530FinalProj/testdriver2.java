@@ -179,7 +179,7 @@ public class testdriver2 {
 				while ((feedback = in.readLine()) == null && feedback.length() == 0);
 				
 				//Feedback creation here
-				//fb.createFeedback(feedback, vin, user.login, con.stmt);
+				fb.createFeedback(feedback, vin, user.login, con.stmt);
 				break;
 				
 			case 5: // View Feedback

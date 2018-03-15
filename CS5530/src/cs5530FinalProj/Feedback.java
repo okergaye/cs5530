@@ -1,6 +1,8 @@
 package cs5530FinalProj;
 
 import java.sql.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Feedback {
 	public Feedback()
@@ -42,9 +44,12 @@ public class Feedback {
 	    return output;
 	}
 	
-	public int createFeedback(String text, String date, String vin, String login, Statement stmt)
+	public int createFeedback(String text, String vin, String login, Statement stmt)
 	{
-		String sql = "insert into Feedback values ('" + 0 + ", '" + text + "', '" + date + "', '" + vin + "', '" + login + "')";
+		Calendar date = new GregorianCalendar();
+    	Date test1 = new Date(date.getTimeInMillis());
+		
+		String sql = "insert into Feedback values ('" + 0 + ", '" + text + "', '" + test1 + "', '" + vin + "', '" + login + "')";
 		int output = -1;
 		try
 		{
