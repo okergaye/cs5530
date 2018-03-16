@@ -787,40 +787,110 @@ public class Database
 		return 0;
 	}
 	
-	public String stats(String choice, String limit, Statement stmt)
+	public void stats(String choice, String limit, Statement stmt)
 	{
 		String c = choice.toLowerCase();
-		String output = "";
 		switch(c)
 		{
 			case "a": //Popular UC
-				output = mostPopularUC(limit, stmt);
+				mostPopularUC(limit, stmt);
 				break;
 				
 			case "b": //Expensive UC
-				output = mostExpensiveUC(limit, stmt);
+				mostExpensiveUC(limit, stmt);
 				break;
 				
 			case "c": //Highest Rating
-				output = highestRatedUC(limit, stmt);
+				highestRatedUC(limit, stmt);
 				break;
 		}
-		return output;
 	}
 	
-	public String mostPopularUC(String limit, Statement Stmt)
+	public void mostPopularUC(String limit, Statement stmt)
 	{
-		return null;
 	}
 	
-	public String mostExpensiveUC(String limit, Statement Stmt)
+	public void mostExpensiveUC(String limit, Statement stmt)
 	{
-		return null;
 	}
 	
-	public String highestRatedUC(String limit, Statement Stmt)
+	public void highestRatedUC(String limit, Statement stmt)
 	{
-		return null;
+		ArrayList<String> cat = new ArrayList<String>();
+		String output = "";
+		String sql = "Select UC.category, UC.login, avg(R.sumRate) as A "
+					+ "from UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
+					+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid group by F.vin order by A desc limit " + limit + "";
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			cat.add(rs.getString("category"));
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	//Name highest rating drivers for each category
+	 	for (String cate : cat)
+	 	{
+		 	sql = "Select UC.category, UC.login, avg(R.sumRate) as A "
+					+ "from UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
+					+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid and UC.category = '" + cate + "' "
+					+ "group by F.vin order by A desc limit " + limit + "";
+		 	output = "";
+			rs=null;
+		 	System.out.println("executing "+sql);
+		 	try
+		 	{
+		 		rs=stmt.executeQuery(sql);
+			 	System.out.println("Highest rated users for " + cate + " cars");
+		 		while (rs.next())
+		 		{
+		 			output += rs.getString("login") + "\n";
+		 		}
+		     
+		 		rs.close();
+		 	}
+		 	catch(Exception e)
+		 	{
+		 		System.out.println("cannot execute the query");
+		 	}
+		 	finally
+		 	{
+		 		try
+		 		{
+			 		if (rs!=null && !rs.isClosed())
+			 			rs.close();
+		 		}
+		 		catch(Exception e)
+		 		{
+		 			System.out.println("cannot close resultset");
+		 		}
+		 	}
+		 	
+		 	//Print the list
+		 	System.out.println(output);
+	 	}
 	}
 	
 	public String userAward(String choice, String limit, Statement stmt)

@@ -289,7 +289,7 @@ public class testdriver2 {
 					}
 				}
 				
-				//user.statShow(choice, con.stmt);
+				user.stats(choice, number, con.stmt);
 				
 				break;
 				
