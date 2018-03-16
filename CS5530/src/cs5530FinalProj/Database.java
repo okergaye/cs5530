@@ -832,9 +832,40 @@ public class Database
 		return 0;
 	}
 	
-	public void stats(String choice, Statement stmt)
+	public String stats(String choice, String limit, Statement stmt)
 	{
-		
+		String c = choice.toLowerCase();
+		String output = "";
+		switch(c)
+		{
+			case "a": //Popular UC
+				output = mostPopularUC(limit, stmt);
+				break;
+				
+			case "b": //Expensive UC
+				output = mostExpensiveUC(limit, stmt);
+				break;
+				
+			case "c": //Highest Rating
+				output = highestRatedUC(limit, stmt);
+				break;
+		}
+		return output;
+	}
+	
+	public String mostPopularUC(String limit, Statement Stmt)
+	{
+		return null;
+	}
+	
+	public String mostExpensiveUC(String limit, Statement Stmt)
+	{
+		return null;
+	}
+	
+	public String highestRatedUC(String limit, Statement Stmt)
+	{
+		return null;
 	}
 	
 	public String userAward(String choice, String limit, Statement stmt)
