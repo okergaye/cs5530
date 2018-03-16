@@ -51,21 +51,23 @@ public class Database
 
 				}
 				 if (choice.equals("a")) {
-					 sql = "Select  UC.vin, UC.category, UC.login,  UC.make, UC.model, avg(R.sumRate) as A from "
+					 sql = "Select  UC.vin, UC.category, UC.login,  UC.make, UC.model, avg(R.sumRate) as AvgRating from "
 						 		+ "UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
 						 		+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid " + cat + add + mod +" "
-						 		+ "group by F.vin order by A";
-						 System.out.println(browseSQLHelper(s, sql));
+						 		+ "group by F.vin order by AvgRating";
 						
 						
 					}else {
+						sql = "Select  UC.vin, UC.category, UC.login,  UC.make, UC.model, avg(R.sumRate) as AvgRating from "
+						 		+ "UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = '" + login + "' and T.login2 = login and T.isTrusted = 1 GROUP BY fid) as R "
+						 		+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid " + cat + add + mod +" "
+						 		+ "group by F.vin order by AvgRating";
 						
-						
-						
+					//	(Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = "A" and T.login2 = login and T.isTrusted = 1 GROUP BY fid)
 						
 					}
 				
-
+				 System.out.println(browseSQLHelper(s, sql));
 
 				return 1;
 			}
@@ -82,7 +84,7 @@ public class Database
 					output += rs.getString("login") + " ";
 					output += rs.getString("make") + " ";
 					output += rs.getString("model") + " ";
-					output += rs.getString("A") + "\n";
+					output += rs.getString("AvgRating") + "\n";
 
 				}
 				rs.close();
