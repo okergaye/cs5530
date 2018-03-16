@@ -299,7 +299,6 @@ public class Database
 					vin = rs.getString("vin");
 					pid = rs.getString("pid");
 					cost = rs.getString("cost");
-					System.out.println(vin + " " + pid + " " + cost); //testing
 					list.add(new Triple(vin, pid, cost, resHour));
 				}
 
@@ -468,7 +467,7 @@ public class Database
 	
 	public int userExists(String login, Statement stmt)
 	{
-		String sql = "select count (*) as count from Users where login = '" + login + "'";
+		String sql = "select count(*) as count from UU where login = '" + login + "'";
 		String output = "";
 		ResultSet rs = null;
 		try
@@ -539,9 +538,9 @@ public class Database
 		} 	
 	}
 	
-	public int trustUser(String login1, String login2, String trust, Statement stmt)
+	public int trustUser(String login1, String login2, int trust, Statement stmt)
 	{
-		String sql = "select Count(*) as counter from Trust where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
+		String sql = "select Count(*) as count from Trust where login1 = '" + login1 + "' and login2 = '" + login2 + "'";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -574,7 +573,8 @@ public class Database
 		
 		if (output.equals("0")) //If the user did not trust the 2nd user yet insert it into trustUsers
 		{
-			sql = "insert into Trust values ('%" + login1 + "%', '%" + login2 + "%', '%" + trust + "%')";
+			
+			sql = "insert into Trust values ('" + login1 + "', '" + login2 + "', '" + trust + "')";
 			int output2 = -1;
 			try
 			{
@@ -588,18 +588,18 @@ public class Database
 
 			if (output2 > 0)
 			{
-				System.out.println("User Trusted Settings Creation Successful");
+				System.out.println("User Trust Set Successfully");
 				return 1;
 			}
 			else
 			{
-				System.out.println("User Trusted Settings Creation Failed");
+				System.out.println("User Trust Set FAILED!!!!");
 				return 0;
 			}
 		}
 		else //If the user already has a trust setting update the trust settings for users trust to 2nd user
 		{
-			sql = "update Trust set trust = '%" + trust + "%' where login1 = '%" + login1 + "%' and login2 = '%" + login2 + "%'";
+			sql = "update Trust set isTrusted = '" + trust + "' where login1 = '" + login1 + "' and login2 = '" + login2 + "'";
 			int output2 = -1;
 			try
 			{
@@ -613,12 +613,12 @@ public class Database
 
 			if (output2 > 0)
 			{
-				System.out.println("User Trusted Settings Updated Successful");
+				System.out.println("User Trust Update Successfully");
 				return 1;
 			}
 			else
 			{
-				System.out.println("User Trusted Settings Updated Failed");
+				System.out.println("User Trust Update FAILED!!!!");
 				return 0;
 			}
 		}

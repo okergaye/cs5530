@@ -176,7 +176,11 @@ public class testdriver2 {
 				System.out.println("please enter car vin number:");
 				vin = in.readLine();
 				
-				fb.getFeedback(vin, con.stmt);
+			    String result =	fb.getFeedback(vin, con.stmt);
+				
+				
+				System.out.println("Here are your results:" + result);
+
 				break;
 				
 			case 6: // Rate Feedback
@@ -194,7 +198,7 @@ public class testdriver2 {
 				
 				if (user.userExists(username, con.stmt) == 1)
 				{
-					user.trustUser(user.login, username, "trusted", con.stmt);
+					user.trustUser(user.login, username, 1, con.stmt);
 				}
 				else
 				{
@@ -209,7 +213,7 @@ public class testdriver2 {
 				
 				if (user.userExists(username, con.stmt) == 1)
 				{
-					user.trustUser(user.login, username, "not-trusted", con.stmt);
+					user.trustUser(user.login, username, 0, con.stmt);
 				}
 				else
 				{

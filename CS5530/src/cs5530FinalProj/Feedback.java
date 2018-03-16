@@ -12,15 +12,19 @@ public class Feedback {
 	public String getFeedback(String vin, Statement stmt)
 	{
 		String sql="select text, fid from Feedback where vin = '"+vin+"'";
-		String output="";
+		String output = "";
+		String text, fid;
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
+	 	System.out.println("Getting Feedback For Vin #: "+vin);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			output += rs.getString("text")+" "+rs.getString("fid")+"\n";
+	 			text = rs.getString("text");
+	 			fid = rs.getString("fid");
+	 		 	output ="\nReview text: " + text + " \nFid: " + fid +"" ;
+
 	 		}
 	     
 	 		rs.close();
@@ -41,6 +45,8 @@ public class Feedback {
 	 			System.out.println("cannot close resultset");
 	 		}
 	 	}
+	 	
+	 	
 	    return output;
 	}
 	
@@ -154,7 +160,7 @@ public class Feedback {
 	 	}
 	 	else //User rating others feedback
 	 	{		
-			sql = "insert into Ratings values ('" + login + "', '" + fid + "', '" + score + "')";
+			sql = "insert into Rates values ('" + login + "', '" + fid + "', '" + score + "')";
 	 		int output2 = -1;
 			try
 			{
