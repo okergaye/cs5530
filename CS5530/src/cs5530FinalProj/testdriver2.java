@@ -65,7 +65,7 @@ public class testdriver2 {
 	
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice, username, vin, feedback, fid, score, from, to, model;
+		String choice, username, vin, feedback, fid, score, from, to, model, address, catagory;
 		int time;
 		boolean loggedIn = true;
 		boolean confirm = false;
@@ -120,7 +120,7 @@ public class testdriver2 {
 					vin = in.readLine();
 					System.out.println("please enter your start time:");
 					from = in.readLine();
-					System.out.println("please enter car vin number:");
+					System.out.println("please enter your end time:");
 					to = in.readLine();
 					
 					temp = user.getRide(user.login, vin, from, to, con.stmt);
@@ -223,6 +223,13 @@ public class testdriver2 {
 				break;
 				
 			case 9: //Browsing UC
+				System.out.println("If blank it will not be considered.");
+				System.out.println("please enter a catagory:");
+				catagory = in.readLine();
+				System.out.println("If blank it will not be considered.");
+				System.out.println("please enter an address (City, State):");
+				address = in.readLine();
+				System.out.println("If blank it will not be considered.");
 				System.out.println("please enter car model:");
 				model = in.readLine();
 				System.out.println("Sorting order:");
@@ -231,7 +238,7 @@ public class testdriver2 {
 				System.out.println("please enter your choice:");
 				choice = in.readLine();
 				
-				//user.BrowseUC(model, choice, con.stmt);
+				//user.BrowseUC(catagory, address, model, choice, con.stmt);
 				
 				break;
 				
