@@ -24,6 +24,19 @@ public class Database
 	
 	
 	
+	
+	//problem 5 begin
+	
+	
+	//problem 5 end
+	
+	
+	
+	
+	
+	
+	
+	
 	//problem 4 area
 	public String getRide(String login, String vin, String fromHour, String toHour, Statement s){
 		Calendar cal = new GregorianCalendar();
@@ -499,8 +512,11 @@ public class Database
 	}
 	
 	public int favoriteCar(String vin, String login, Statement stmt)
-	{
-		String sql = "insert into Favorites values ('" + vin + "', '" + login + "')";
+	{	
+		Calendar cal = new GregorianCalendar();
+	Date date = new Date(cal.getTimeInMillis());
+		
+		String sql = "insert into Favorites values ('" + vin + "', '" + login + "', '" + date + "')";
 		int output = -1;
 		try{
 			output = stmt.executeUpdate(sql);
