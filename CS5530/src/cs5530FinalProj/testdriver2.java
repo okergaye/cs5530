@@ -65,7 +65,7 @@ public class testdriver2 {
 	
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice, username, vin, feedback, fid, score, from, to, model, address, catagory;
+		String choice, username, vin, feedback, fid, score, from, to, model, address, catagory, number, output;
 		int time;
 		boolean loggedIn = true;
 		boolean confirm = false;
@@ -179,7 +179,7 @@ public class testdriver2 {
 			    String result =	fb.getFeedback(vin, con.stmt);
 				
 				
-				System.out.println("Here are your results:" + result);
+				System.out.println("Here are your results: \n" + result);
 
 				break;
 				
@@ -263,12 +263,39 @@ public class testdriver2 {
 				
 			case 12: //User Awards
 				System.out.println("User Award:");
-				System.out.println("(a) Most trusted user:");
-				System.out.println("(b) Most useful user:");
-				System.out.println("please enter your choice:");
-				choice = in.readLine();
+				System.out.println("please enter how many users to limit the list to:");
+				number = in.readLine();
 				
-				//user.award(choice, con.stmt);
+				boolean choiceTrue = false;
+				
+				while (!choiceTrue)
+				{
+					System.out.println("(a) Most trusted user:");
+					System.out.println("(b) Most useful user:");
+					System.out.println("please enter your choice:");
+					choice = in.readLine();
+					
+					if (!choice.toLowerCase().equals("a") && !choice.toLowerCase().equals("b"))
+					{
+						System.out.println("Choose one of the two options.");
+					}
+					else
+					{
+						choiceTrue = true;
+					}
+				}
+				
+				output = user.userAward(choice, number, con.stmt);
+				
+				switch(choice.toLowerCase())
+				{
+				case "a":
+					System.out.println("Heres the list of most trusted users: \n" + output);
+					break;
+				case "b":
+					System.out.println("Heres the list of most useful users: \n" + output);
+					break;
+				}
 				
 				break;
 				

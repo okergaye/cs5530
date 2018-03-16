@@ -627,4 +627,130 @@ public class Database
 			}
 		}
 	}
+	
+	public int degreesOfSeperation(String username1, String username2, Statement stmt)
+	{
+		//Determine if degree is one
+		String sql = "select temp.login from Favorites f, (select * from Favorites) as temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + username1 + "'";
+		String output = "";
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			output += rs.getString("login");
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+		return 0;
+	}
+	
+	public String userAward(String choice, String limit, Statement stmt)
+	{
+		String c = choice.toLowerCase();
+		String output = "";
+		switch(c)
+		{
+			case "a": //Trustful Users
+				output = trustfulUsers(limit, stmt);
+				break;
+				
+			case "b": //Useful Users
+				output = usefulUsers(limit, stmt);
+				break;
+		}
+		return output;
+	}
+	
+	public String trustfulUsers(String limit, Statement stmt)
+	{
+		String sql = "select login2, sum(isTrusted) as trust from Trust group by login2 order by trust asc limit " + limit + "";
+		String output = "";
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			output += rs.getString("login2") + "\n";
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	return output;
+	}
+	
+	public String usefulUsers(String limit, Statement stmt)
+	{
+		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating asc limit " + limit + "";
+		String output = "";
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			output += rs.getString("login") + "\n";
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	return output;
+	}
 }
