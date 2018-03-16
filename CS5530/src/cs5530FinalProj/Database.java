@@ -684,7 +684,7 @@ public class Database
 	
 	public String trustfulUsers(String limit, Statement stmt)
 	{
-		String sql = "select login2, sum(isTrusted) as total (select Count(*) as count from Trust where isTrusted = 0), total - count as trust from Trust group by login2 order by trust asc limit " + limit + "";
+		String sql = "select login2, (select Count(*) as total from Trust), (select Count(*) as count from Trust where isTrusted = 0), total - count as trust from Trust group by login2 order by trust asc limit " + limit + "";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
