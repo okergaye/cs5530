@@ -22,19 +22,135 @@ public class Database
 	public Database()
 	{}
 	
+	// problem 9 begin
+		public int userBrowseUC(String login, String catagory, String address, String model, String choice, Statement s) {
+
+			//Make things and normalize
+			StringBuilder switchString = new StringBuilder("");
+			choice.toLowerCase();
+
+			// if choice is not valid quit life
+			if (!choice.equals("a") || !choice.equals("b")) {
+				return 0;
+			}
+			String cat = "", add = "", mod ="";
+			
+			//discover which combination is selected
+			if (catagory.length() != 0) {
+	            switchString.append("c");
+	            cat = "category = '" + catagory + "'";
+			}
+			if (address.length() != 0) {
+				switchString.append("a");
+				add = "address = '" + address + "'";
+
+			}
+			if (model.length() != 0) {
+				switchString.append("m");
+				mod = "model = '" + model + "'";
+
+			}
+
+
+			String sql = "Select * from UC,UD  WHERE UC.login = UD.login and " + cat + add + mod + "";
+
+			// get maybe available pid, this will catch exceptions
+			ResultSet rs = null;
+			try {
+				rs = s.executeQuery(sql);
+				while (rs.next()) {
+					String count = rs.getString("C");
+				}
+				rs.close();
+			} catch (Exception e) {
+				System.out.println("cannot execute the query");
+			} finally {
+				try {
+					if (rs != null && !rs.isClosed())
+						rs.close();
+				} catch (Exception e) {
+					System.out.println("cannot close resultset");
+				}
+			}
+			
+			
+			
+			
+			//there might be a better way todo what is below by trying the above
+			
+			//Switch to decide what factors are to be considerd
+			switch (switchString.toString()) {
+			case "":
+
+				break;
+			case "c":
+					if (choice.equals("a")) {
+						
+					}else {
+						
+						
+					}
+
+				break;
+			case "a":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			case "m":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			case "ca":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			case "cm":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			case "am":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			case "cam":
+				if (choice.equals("a")) {
+					
+				}else {
+					
+					
+				}
+				break;
+			default:
+				break;
+			}
+
+			return 1;
+		}
+		// problem 9 end
+
 	
 	
-	
-	//problem 9 begin
-	public int userBrowseUC(String login, String catagory, String address, String model, String choice, Statement s){
-		
-		
-		
-		return 1;
-	}
-	//problem 9 end
-	
-	
+
 	
 	
 	
