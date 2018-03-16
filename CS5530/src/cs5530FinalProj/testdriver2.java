@@ -65,7 +65,7 @@ public class testdriver2 {
 	
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice, username, vin, feedback, fid, score, from, to, model, address, catagory, number, output;
+		String choice, username, username2, vin, feedback, fid, score, from, to, model, address, catagory, number, output;
 		int time;
 		boolean loggedIn = true;
 		boolean confirm = false;
@@ -243,10 +243,14 @@ public class testdriver2 {
 				break;
 				
 			case 10: //2DoS
-				System.out.println("please enter other username:");
+				System.out.println("please enter first username:");
 				username = in.readLine();
+				System.out.println("please enter second username:");
+				username2 = in.readLine();
 				
-				//user.TwoDegreesOfSeperation(user.login, username, con.stmt);
+				int degree;
+				
+				degree = user.degreesOfSeperation(username, username2, con.stmt);
 				break;
 				
 			case 11: //Stats
