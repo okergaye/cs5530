@@ -215,7 +215,7 @@ public class testdriver2 {
 				
 				if (user.userExists(username, con.stmt) == 1)
 				{
-					user.trustUser(user.login, username, 0, con.stmt);
+					user.trustUser(user.login, username, -1, con.stmt);
 				}
 				else
 				{

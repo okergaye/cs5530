@@ -887,7 +887,7 @@ public class Database
 	
 	public String trustfulUsers(String limit, Statement stmt)
 	{
-		String sql = "select login2, (select Count(*) as total from Trust), (select Count(*) as count from Trust where isTrusted = 0), total - count as trust from Trust group by login2 order by trust asc limit '" + limit + "'";
+		String sql = "select login2, sum(isTrusted) as trust from Trust group by login2 order by trust desc limit " + limit + "";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -923,7 +923,7 @@ public class Database
 	
 	public String usefulUsers(String limit, Statement stmt)
 	{
-		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating asc limit '" + limit + "'";
+		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating desc limit " + limit + "";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
