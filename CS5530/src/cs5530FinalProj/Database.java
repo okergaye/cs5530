@@ -25,10 +25,14 @@ public class Database
 	
 	
 	
-	//problem 5 begin
-	
-	
-	//problem 5 end
+	//problem 9 begin
+	public int userBrowseUC(String login, String catagory, String address, String model, String choice, Statement s){
+		
+		
+		
+		return 1;
+	}
+	//problem 9 end
 	
 	
 	

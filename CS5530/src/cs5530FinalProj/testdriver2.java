@@ -238,7 +238,7 @@ public class testdriver2 {
 				System.out.println("please enter your choice:");
 				choice = in.readLine();
 				
-				//user.BrowseUC(catagory, address, model, choice, con.stmt);
+				user.userBrowseUC(user.login, catagory, address, model, choice, con.stmt);
 				
 				break;
 				
