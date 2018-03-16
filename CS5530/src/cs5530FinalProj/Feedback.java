@@ -46,14 +46,54 @@ public class Feedback {
 	
 	public int createFeedback(String text, String vin, String login, Statement stmt)
 	{
+		String sql="select login from Feedback where vin = '"+vin+"'";
+		String output="";
+		ResultSet rs=null;
+		
+		//Executing SQL
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			output = rs.getString("login");
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	if (output.equals(login)) //Check if user is trying to create another feedback
+	 	{
+	 		System.out.println("Unvaliable to create feedback.  Feedback already exists.");
+	 		return 0;
+	 	}
+		
+	 	//Start inserting into table
 		Calendar date = new GregorianCalendar();
     	Date test1 = new Date(date.getTimeInMillis());
 		
-		String sql = "insert into Feedback values('" + 0 + "', '" + text + "', '" + test1 + "', '" + vin + "', '" + login + "')";
-		int output = -1;
+		sql = "insert into Feedback values('" + 0 + "', '" + text + "', '" + test1 + "', '" + vin + "', '" + login + "')";
+		int output2 = -1;
 		try
 		{
-			output = stmt.executeUpdate(sql);
+			output2 = stmt.executeUpdate(sql);
 		}
 		catch(Exception e)
 		{
@@ -61,7 +101,7 @@ public class Feedback {
 			System.out.println(e.getMessage());
 		}
 
-		if (output > 0)
+		if (output2 > 0)
 		{
 			System.out.println("Feedback Creation Successful");
 			return 1;
@@ -76,7 +116,7 @@ public class Feedback {
 	//User inputs fid in order to rate that feedback if its the users feedback do not rate his own feedback
 	public int rateFeedback(String login, String fid, String score, Statement stmt)
 	{
-		String sql="select login from Feedback where fid = '%"+fid+"%'";
+		String sql="select login from Feedback where fid = '"+fid+"'";
 		String output="";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -114,7 +154,7 @@ public class Feedback {
 	 	}
 	 	else //User rating others feedback
 	 	{		
-			sql = "insert into Ratings values ('%" + login + "%', '%" + fid + "%', '%" + score + "%')";
+			sql = "insert into Ratings values ('" + login + "', '" + fid + "', '" + score + "')";
 	 		int output2 = -1;
 			try
 			{
