@@ -22,6 +22,104 @@ public class Database
 	public Database()
 	{}
 	
+	
+	
+	public int addHours(String login, String from, String too, Statement s) {
+
+		int start, end;
+		
+		start = Integer.parseInt(from);
+		end = Integer.parseInt(too);
+		
+		if (end <= start) {
+			return 0;
+		}
+		
+		String sql = "INSERT INTO Period " 
+			   + "VALUES (0, '" + from + "', '" + too + "')";
+		
+		insertSQL(s, sql);
+		
+		sql = "Select max(Pid) as pid from Period";
+		String pid = "";		 
+		ResultSet rs = null;
+		try {
+			rs = s.executeQuery(sql);
+			while (rs.next()) {
+				pid = rs.getString("pid");
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println("cannot execute the query for getting pid");
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+			} catch (Exception e) {
+				System.out.println("cannot close resultset");
+			}
+		}
+		
+		sql = "INSERT INTO Available " 
+				   + "VALUES ('" + login + "', '" + pid + "')";
+		int output = -1;
+		try
+		{
+			output = s.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query for updating avalible table");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Avaliable Added");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Avaliable did not add..idk");
+			return 0;
+		} 
+
+	}
+
+
+
+	private int insertSQL(Statement s, String sql) {
+		
+		int output = -1;
+		try
+		{
+			output = s.executeUpdate(sql);
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+			System.out.println(e.getMessage());
+		}
+
+		if (output > 0)
+		{
+			System.out.println("Period Added");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Period did not add..idk");
+			return 0;
+		} 
+		
+	}
+	
+				
+	
+	
+	
+	
+	
 	// problem 9 begin
 			public int userBrowseUC(String login, String catagory, String address, String model, String choice, Statement s) {
 

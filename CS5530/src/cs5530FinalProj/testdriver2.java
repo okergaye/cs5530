@@ -471,7 +471,7 @@ public class testdriver2 {
 				
 				//Set the hours of operation for the ud from this information
 				
-				//user.addHours(user.login, from, to, con.stmt);
+				user.addHours(user.login, from, to, con.stmt);
 				
 				break;
 				
