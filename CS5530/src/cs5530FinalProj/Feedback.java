@@ -49,7 +49,7 @@ public class Feedback {
 		Calendar date = new GregorianCalendar();
     	Date test1 = new Date(date.getTimeInMillis());
 		
-		String sql = "insert into Feedback values ('" + 0 + ", '" + text + "', '" + test1 + "', '" + vin + "', '" + login + "')";
+		String sql = "insert into Feedback values('" + 0 + "', '" + text + "', '" + test1 + "', '" + vin + "', '" + login + "')";
 		int output = -1;
 		try
 		{
