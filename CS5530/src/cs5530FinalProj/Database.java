@@ -487,6 +487,10 @@ public class Database
 		
     }
     
+    public void suggestion(String login, String vin, Statement stmt)
+    {
+    	String sql = "select r.login, temp.vin from Ride r, Ride temp where r.login != '"+ login +"' and r.vin = '"+ vin +"'";
+    }
     
     
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
@@ -828,6 +832,11 @@ public class Database
 		return 0;
 	}
 	
+	public void stats(String choice, Statement stmt)
+	{
+		
+	}
+	
 	public String userAward(String choice, String limit, Statement stmt)
 	{
 		String c = choice.toLowerCase();
@@ -847,7 +856,7 @@ public class Database
 	
 	public String trustfulUsers(String limit, Statement stmt)
 	{
-		String sql = "select login2, (select Count(*) as total from Trust), (select Count(*) as count from Trust where isTrusted = 0), total - count as trust from Trust group by login2 order by trust asc limit " + limit + "";
+		String sql = "select login2, (select Count(*) as total from Trust), (select Count(*) as count from Trust where isTrusted = 0), total - count as trust from Trust group by login2 order by trust asc limit '" + limit + "'";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
@@ -883,7 +892,7 @@ public class Database
 	
 	public String usefulUsers(String limit, Statement stmt)
 	{
-		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating asc limit " + limit + "";
+		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating asc limit '" + limit + "'";
 		String output = "";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);

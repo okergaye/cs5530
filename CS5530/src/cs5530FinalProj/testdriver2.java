@@ -42,10 +42,11 @@ public class testdriver2 {
 		System.out.println("7. Set User to Trusted:");
 		System.out.println("8. Set User to Not Trusted:");
 		System.out.println("9. Browse UC:");
-		System.out.println("10. Two Degrees of Seperation:");
-		System.out.println("11. Statistics:");
-		System.out.println("12. User Awards (admin only):");
-		System.out.println("13. Logout:");
+		System.out.println("10. Search UD Feedbacks:");
+		System.out.println("11. Two Degrees of Seperation:");
+		System.out.println("12. Statistics:");
+		System.out.println("13. User Awards (admin only):");
+		System.out.println("14. Logout:");
 		System.out.println("pleasse enter your choice:");
 	}
 	
@@ -58,7 +59,7 @@ public class testdriver2 {
 		System.out.println("4. Logout:");
 		System.out.println("pleasse enter your choice:");
 	}
-	//end of console write line menues
+	//end of console write line menus
 	
 	
 	//this is main menu option 2
@@ -69,6 +70,7 @@ public class testdriver2 {
 		int time;
 		boolean loggedIn = true;
 		boolean confirm = false;
+		boolean choiceTrue = false;
 		Feedback fb = new Feedback();
 		int c=0;
 		
@@ -89,7 +91,7 @@ public class testdriver2 {
 			}
 			
 			//Check if in bounds
-			if (c<1 | c>13)
+			if (c<1 | c>14)
 				continue;
 			
 			//Switch case for all the options
@@ -242,7 +244,15 @@ public class testdriver2 {
 				
 				break;
 				
-			case 10: //2DoS
+			case 10: //Search UD feedbacks
+				System.out.println("please enter a UD login:");
+				username = in.readLine();
+				
+				//user.searchUD(username, con.stmt);
+				
+				break;
+				
+			case 11: //2DoS
 				System.out.println("please enter first username:");
 				username = in.readLine();
 				System.out.println("please enter second username:");
@@ -253,24 +263,42 @@ public class testdriver2 {
 				degree = user.degreesOfSeperation(username, username2, con.stmt);
 				break;
 				
-			case 11: //Stats
+			case 12: //Stats
 				System.out.println("Statistics:");
-				System.out.println("(a) Most popular UC for each catagory:");
-				System.out.println("(b) Most expensive UC for each catagory:");
-				System.out.println("(c) Highest Rating UC for each catagory:");
-				System.out.println("please enter your choice:");
-				choice = in.readLine();
+				System.out.println("please enter how many users to limit the list to:");
+				number = in.readLine();
+				
+				choiceTrue = false;
+				
+				while (!choiceTrue)
+				{
+					System.out.println("Statistics:");
+					System.out.println("(a) Most popular UC for each catagory:");
+					System.out.println("(b) Most expensive UC for each catagory:");
+					System.out.println("(c) Highest Rating UC for each catagory:");
+					System.out.println("please enter your choice:");
+					choice = in.readLine();
+					
+					if (!choice.toLowerCase().equals("a") && !choice.toLowerCase().equals("b") && !choice.toLowerCase().equals("c"))
+					{
+						System.out.println("Choose one of the three options.");
+					}
+					else
+					{
+						choiceTrue = true;
+					}
+				}
 				
 				//user.statShow(choice, con.stmt);
 				
 				break;
 				
-			case 12: //User Awards
+			case 13: //User Awards
 				System.out.println("User Award:");
 				System.out.println("please enter how many users to limit the list to:");
 				number = in.readLine();
 				
-				boolean choiceTrue = false;
+				choiceTrue = false;
 				
 				while (!choiceTrue)
 				{
@@ -303,16 +331,13 @@ public class testdriver2 {
 				
 				break;
 				
-			case 13: //Logging out
+			case 14: //Logging out
 				user.logout();
 				loggedIn = false;
 				System.out.println("Logging out.");
 				break;
 			}
 		}
-		
-		//Switch to main menu
-		mainMenu(in, con, user);
 	}
 
 	private static void reserve(BufferedReader in, Connector con, Database user) throws IOException {
@@ -349,6 +374,7 @@ public class testdriver2 {
 				{
 					confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
 					System.out.println("added");
+					user.suggestion(user.login, vin, con.stmt);
 				}
 			}
 			
@@ -444,6 +470,8 @@ public class testdriver2 {
 				to = in.readLine();
 				
 				//Set the hours of operation for the ud from this information
+				
+				//user.addHours(user.login, from, to, con.stmt);
 				
 				break;
 				
