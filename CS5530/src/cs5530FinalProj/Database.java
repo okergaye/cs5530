@@ -35,7 +35,7 @@ public class Database
 		String sql = "Select count(*) as C from Period P WHERE P.pid = "
 				+ "(SELECT A.pid from Available A where login = "
 				+ "(SELECT UC.login from UC where UC.vin = '" + vin + "')) "
-				+ "and P.fromHour > '" + fromHour + "' and P.toHour < '" + toHour + "'";
+				+ "and P.fromHour < '" + fromHour + "' and P.toHour > '" + toHour + "'";
 
 		// get maybe available pid, this will catch exceptions
 		ResultSet rs=null;

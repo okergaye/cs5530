@@ -123,7 +123,7 @@ public class testdriver2 {
 					System.out.println("please enter car vin number:");
 					to = in.readLine();
 					
-					temp = user.getRide(user.login, vin, from, to);
+					temp = user.getRide(user.login, vin, from, to, con.stmt);
 					
 					//Check if the car was available at that time or not
 					if (temp == null)
