@@ -747,8 +747,8 @@ public class Database
 	public int degreesOfSeperation(String username1, String username2, Statement stmt)
 	{
 		//Determine if degree is one
-		String sql = "select temp.login from Favorites f, (select * from Favorites) as temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + username1 + "'";
-		String output = "";
+		ArrayList<String> oneDegree = new ArrayList<String>();
+		String sql = "select temp.login from Favorites f, Favorites temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + username1 + "'";
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
 	 	try
@@ -756,7 +756,7 @@ public class Database
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			output += rs.getString("login");
+	 			oneDegree.add(rs.getString("login"));
 	 		}
 	     
 	 		rs.close();
@@ -775,6 +775,53 @@ public class Database
 	 		catch(Exception e)
 	 		{
 	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	if (oneDegree.contains(username2))
+	 	{
+	 		return 1;
+	 	}
+	 	else //Find if there degree of seperation is 2
+	 	{
+	 		ArrayList<String> twoDegree = new ArrayList<String>();
+	 		for (String val : oneDegree)
+	 		{
+				sql = "select temp.login from Favorites f, Favorites temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + val + "'";
+				rs=null;
+			 	System.out.println("executing "+sql);
+			 	try
+			 	{
+			 		rs=stmt.executeQuery(sql);
+			 		while (rs.next())
+			 		{
+			 			twoDegree.add(rs.getString("login"));
+			 		}
+			     
+			 		rs.close();
+			 	}
+			 	catch(Exception e)
+			 	{
+			 		System.out.println("cannot execute the query");
+			 	}
+			 	finally
+			 	{
+			 		try
+			 		{
+				 		if (rs!=null && !rs.isClosed())
+				 			rs.close();
+			 		}
+			 		catch(Exception e)
+			 		{
+			 			System.out.println("cannot close resultset");
+			 		}
+			 	}
+	 		}
+	 		
+	 		//Check for degree of seperation is 2
+	 		if (twoDegree.contains(username2))
+	 		{
+	 			return 2;
 	 		}
 	 	}
 	 	
