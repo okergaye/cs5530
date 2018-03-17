@@ -914,19 +914,13 @@ public class Database
 	
 	public void mostPopularUC(String limit, Statement stmt)
 	{
-	}
-	
-	public void mostExpensiveUC(String limit, Statement stmt)
-	{
-	}
-	
-	public void highestRatedUC(String limit, Statement stmt)
-	{
 		ArrayList<String> cat = new ArrayList<String>();
 		String output = "";
-		String sql = "Select UC.category, UC.login, avg(R.sumRate) as A "
-					+ "from UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
-					+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid group by F.vin order by A desc limit " + limit + "";
+		String sql = "Select UC.category, UC.login, R.total as A "
+				+ "from UC,UD, (Select Count(*) as total, vin from Ride GROUP BY vin) as R "
+				+ "where UC.login = UD.login and R.vin = UC.vin "
+				+ "group by R.vin order by A";
+		
 		ResultSet rs=null;
 	 	System.out.println("executing "+sql);
 	 	try
@@ -934,7 +928,177 @@ public class Database
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			cat.add(rs.getString("category"));
+	 			//DO NOT ADD MORE THAN 1 OF THE SAME CATEGORY
+	 			if (!cat.contains(rs.getString("category")))
+ 					cat.add(rs.getString("category"));
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	//Name most popular drivers for each category
+	 	for (String cate : cat)
+	 	{
+	 		sql = "Select UC.category, UC.vin, R.total as A "
+					+ "from UC,UD, (Select Count(*) as total, vin from Ride GROUP BY vin) as R "
+					+ "where UC.login = UD.login and R.vin = UC.vin and UC.category = '" + cate + "' "
+					+ "group by R.vin order by A desc limit " + limit + "";
+
+		 	output = "";
+			rs=null;
+		 	System.out.println("executing "+sql);
+		 	try
+		 	{
+		 		rs=stmt.executeQuery(sql);
+			 	System.out.println("Most Popular users for " + cate + " cars");
+		 		while (rs.next())
+		 		{
+		 			output += rs.getString("vin") + "\n";
+		 		}
+		     
+		 		rs.close();
+		 	}
+		 	catch(Exception e)
+		 	{
+		 		System.out.println("cannot execute the query");
+		 	}
+		 	finally
+		 	{
+		 		try
+		 		{
+			 		if (rs!=null && !rs.isClosed())
+			 			rs.close();
+		 		}
+		 		catch(Exception e)
+		 		{
+		 			System.out.println("cannot close resultset");
+		 		}
+		 	}
+		 	
+		 	//Print the list
+		 	System.out.println(output);
+	 	}
+	}
+	
+	public void mostExpensiveUC(String limit, Statement stmt)
+	{
+		ArrayList<String> cat = new ArrayList<String>();
+		String output = "";
+		String sql = "Select UC.category, UC.login, R.spent as A "
+				+ "from UC,UD, (Select avg(cost) as spent, vin from Ride GROUP BY vin) as R "
+				+ "where UC.login = UD.login and R.vin = UC.vin "
+				+ "group by R.vin order by A";
+		
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			//DO NOT ADD MORE THAN 1 OF THE SAME CATEGORY
+	 			if (!cat.contains(rs.getString("category")))
+ 					cat.add(rs.getString("category"));
+	 		}
+	     
+	 		rs.close();
+	 	}
+	 	catch(Exception e)
+	 	{
+	 		System.out.println("cannot execute the query");
+	 	}
+	 	finally
+	 	{
+	 		try
+	 		{
+		 		if (rs!=null && !rs.isClosed())
+		 			rs.close();
+	 		}
+	 		catch(Exception e)
+	 		{
+	 			System.out.println("cannot close resultset");
+	 		}
+	 	}
+	 	
+	 	//Name most expensive drivers for each category
+	 	for (String cate : cat)
+	 	{
+	 		sql = "Select UC.category, UC.vin, R.spent as A "
+					+ "from UC,UD, (Select avg(cost) as spent, vin from Ride GROUP BY vin) as R "
+					+ "where UC.login = UD.login and R.vin = UC.vin and UC.category = '" + cate + "' "
+					+ "group by R.vin order by A desc limit " + limit + "";
+
+		 	output = "";
+			rs=null;
+		 	System.out.println("executing "+sql);
+		 	try
+		 	{
+		 		rs=stmt.executeQuery(sql);
+			 	System.out.println("Most Expensive " + cate + " cars");
+		 		while (rs.next())
+		 		{
+		 			output += rs.getString("vin") + "\n";
+		 		}
+		     
+		 		rs.close();
+		 	}
+		 	catch(Exception e)
+		 	{
+		 		System.out.println("cannot execute the query");
+		 	}
+		 	finally
+		 	{
+		 		try
+		 		{
+			 		if (rs!=null && !rs.isClosed())
+			 			rs.close();
+		 		}
+		 		catch(Exception e)
+		 		{
+		 			System.out.println("cannot close resultset");
+		 		}
+		 	}
+		 	
+		 	//Print the list
+		 	System.out.println(output);
+	 	}
+	}
+	
+	public void highestRatedUC(String limit, Statement stmt)
+	{
+		ArrayList<String> cat = new ArrayList<String>();
+		String output = "";
+		String sql = "Select UC.category, UC.login, avg(R.sumRate) as A "
+				+ "from UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
+				+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid "
+				+ "group by F.vin order by A";
+
+		ResultSet rs=null;
+	 	System.out.println("executing "+sql);
+	 	try
+	 	{
+	 		rs=stmt.executeQuery(sql);
+	 		while (rs.next())
+	 		{
+	 			//DO NOT ADD MORE THAN 1 OF THE SAME CATEGORY
+	 			if (!cat.contains(rs.getString("category")))
+ 					cat.add(rs.getString("category"));
 	 		}
 	     
 	 		rs.close();
@@ -959,10 +1123,10 @@ public class Database
 	 	//Name highest rating drivers for each category
 	 	for (String cate : cat)
 	 	{
-		 	sql = "Select UC.category, UC.login, avg(R.sumRate) as A "
+		 	sql = "Select T.login, avg(T.A)as B from (Select UC.category, UC.login, avg(R.sumRate) as A "
 					+ "from UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
 					+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid and UC.category = '" + cate + "' "
-					+ "group by F.vin order by A desc limit " + limit + "";
+					+ "group by F.vin order by A) as T group by T.login order by B desc limit " + limit + "";
 		 	output = "";
 			rs=null;
 		 	System.out.println("executing "+sql);
