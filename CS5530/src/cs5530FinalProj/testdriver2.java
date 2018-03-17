@@ -247,8 +247,9 @@ public class testdriver2 {
 			case 10: //Search UD feedbacks
 				System.out.println("please enter a UD login:");
 				username = in.readLine();
-				
-				//user.searchUD(username, con.stmt);
+				System.out.println("please enter the number of feedbacks to display:");
+				number = in.readLine();
+				user.usefullFeedback(username, number, con.stmt);
 				
 				break;
 				

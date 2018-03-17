@@ -22,7 +22,17 @@ public class Database
 	public Database()
 	{}
 	
-	
+	//for number 10 start
+	public void usefullFeedback(String UDLogin, String numToDisplay, Statement s){
+		
+		
+		
+		
+		
+		
+		
+	}
+	// number 10 end
 	
 	public int addHours(String login, String from, String too, Statement s) {
 
@@ -124,7 +134,6 @@ public class Database
 			public int userBrowseUC(String login, String catagory, String address, String model, String choice, Statement s) {
 
 				//Make things and normalize
-				StringBuilder switchString = new StringBuilder("");
 				choice.toLowerCase();
 				String cat = "", add = "", mod ="", sql = "";
 
@@ -135,16 +144,13 @@ public class Database
 				
 				//discover which combination is selected
 				if (catagory.length() != 0) {
-		            switchString.append("c");
 		            cat = "and UC.category = '" + catagory + "'";
 				}
 				if (address.length() != 0) {
-					switchString.append("a");
 					add = "and UD.address = '" + address + "'";
 
 				}
 				if (model.length() != 0) {
-					switchString.append("m");
 					mod = "and UC.model = '" + model + "'";
 
 				}
@@ -152,14 +158,14 @@ public class Database
 					 sql = "Select  UC.vin, UC.category, UC.login,  UC.make, UC.model, avg(R.sumRate) as AvgRating from "
 						 		+ "UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates GROUP BY fid) as R "
 						 		+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid " + cat + add + mod +" "
-						 		+ "group by F.vin order by AvgRating";
+						 		+ "group by F.vin order by AvgRating ASC";
 						
 						
 					}else {
 						sql = "Select  UC.vin, UC.category, UC.login,  UC.make, UC.model, avg(R.sumRate) as AvgRating from "
 						 		+ "UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = '" + login + "' and T.login2 = login and T.isTrusted = 1 GROUP BY fid) as R "
 						 		+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid " + cat + add + mod +" "
-						 		+ "group by F.vin order by AvgRating";
+						 		+ "group by F.vin order by AvgRating ASC";
 						
 					//	(Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = "A" and T.login2 = login and T.isTrusted = 1 GROUP BY fid)
 						
