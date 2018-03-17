@@ -584,7 +584,41 @@ public class Database
     
     public void suggestion(String login, String vin, Statement stmt)
     {
-    	String sql = "select r.login, temp.vin from Ride r, Ride temp where r.login != '"+ login +"' and r.vin = '"+ vin +"'";
+    	String sql = "Select r.vin, Count(*) as A "
+    			+ "from Ride r, (select login from Ride where login != '" + login + "' and vin = '" + vin + "' limit 1) as T "
+    			+ "where r.login = T.login and r.vin != '" + vin + "' "
+    			+ "group by r.vin order by A desc";
+    	String output = "";
+    	
+    	ResultSet rs = null;
+		try
+		{
+			rs=stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				output += rs.getString("vin") + "\n";
+			}
+
+			rs.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("cannot execute the query");
+		}
+		finally
+		{
+			try{
+				if (rs!=null && !rs.isClosed())
+					rs.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("cannot close resultset");
+			}
+		}
+    	
+		System.out.println("Other user have rode this car here are some other cars they rode with: ");
+		System.out.println(output);
     }
     
     
