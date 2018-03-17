@@ -26,9 +26,43 @@ public class Database
 	public void usefullFeedback(String UDLogin, String numToDisplay, Statement s){
 		
 		
+//		SELECT  fid, text, fbdate, Owned.vin, Owned.login, usefullness from (Select UC.vin, UD.login from  UC,UD where
+//				UC.login = "Ono" and UC.login = UD.login) as Owned, (Select F.vin, F.fid, F.text, F.fbdate, F.login, R.sumRate as usefullness from
+//				  (Select avg(rating) as sumRate, fid from Rates GROUP BY fid) as R, Feedback F
+//				where F.fid = R.fid) as bestFeedback where Owned.vin = bestFeedback.vin order by usefullness desc LIMIT 2
 		
+		String sql = "SELECT fid, text, fbdate, Owned.vin, bestFeedback.login, usefullness from (Select UC.vin, UD.login from  UC,UD where "
+				+ "UC.login = '" + UDLogin + "' and UC.login = UD.login) as Owned, (Select F.vin, F.fid, F.text, F.fbdate, F.login, R.sumRate as usefullness from "
+				+ "(Select avg(rating) as sumRate, fid from Rates GROUP BY fid) as R, Feedback F "
+				+ "where F.fid = R.fid) as bestFeedback where Owned.vin = bestFeedback.vin order by usefullness desc LIMIT " + numToDisplay + " ";
 		
+		ResultSet rs = null;
+		String output = "";
+		try {
+			rs = s.executeQuery(sql);
+			while (rs.next()) {
+				//this is only for getting stuff back
+				output +=  "|| Fid: " + rs.getString("fid") + " ";
+				output +=  "|| Feedback text: " + rs.getString("text") + " ";
+				output += "|| Date of Feedback: " + rs.getString("fbdate") + " ";
+				output += "|| vin: " + rs.getString("vin") + " ";
+				output += "|| Feedbackers login: " +rs.getString("login") + " ";
+				output += "|| usefullness: " +rs.getString("usefullness") + "\n";
+
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println("cannot execute the query");
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+			} catch (Exception e) {
+				System.out.println("cannot close resultset");
+			}
+		}
 		
+		System.out.println(output);
 		
 		
 	}
