@@ -956,7 +956,7 @@ public class Database
 				+ "group by R.vin order by A";
 		
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
+	 //	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -996,14 +996,14 @@ public class Database
 
 		 	output = "";
 			rs=null;
-		 	System.out.println("executing "+sql);
+		// 	System.out.println("executing "+sql);
 		 	try
 		 	{
 		 		rs=stmt.executeQuery(sql);
-			 	System.out.println("Most Popular users for " + cate + " cars");
+			 	System.out.println("Most Popular Uber Cars in " + cate + "");
 		 		while (rs.next())
 		 		{
-		 			output += rs.getString("vin") + "\n";
+		 			output += "Ride Count: " + rs.getString("A") +" with vin: " + rs.getString("vin") + "\n";
 		 		}
 		     
 		 		rs.close();
