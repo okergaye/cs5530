@@ -42,12 +42,12 @@ public class Database
 			rs = s.executeQuery(sql);
 			while (rs.next()) {
 				//this is only for getting stuff back
+				output += "|| usefullness: " +rs.getString("usefullness") + "\n";
 				output +=  "|| Fid: " + rs.getString("fid") + " ";
 				output +=  "|| Feedback text: " + rs.getString("text") + " ";
 				output += "|| Date of Feedback: " + rs.getString("fbdate") + " ";
 				output += "|| vin: " + rs.getString("vin") + " ";
 				output += "|| Feedbackers login: " +rs.getString("login") + " ";
-				output += "|| usefullness: " +rs.getString("usefullness") + "\n";
 
 			}
 			rs.close();

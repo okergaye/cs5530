@@ -262,6 +262,8 @@ public class testdriver2 {
 				int degree;
 				
 				degree = user.degreesOfSeperation(username, username2, con.stmt);
+				System.out.println("Users: " +username+ " and " +username2+ " are " + degree+ " degree apart" );
+
 				break;
 				
 			case 12: //Stats
