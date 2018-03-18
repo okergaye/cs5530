@@ -67,9 +67,7 @@ public class testdriver2 {
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
 		String choice, username, username2, vin, feedback, fid, score, from, to, model, address, catagory, number, output;
-		int time;
 		boolean loggedIn = true;
-		boolean confirm = false;
 		boolean choiceTrue = false;
 		Feedback fb = new Feedback();
 		int c=0;
@@ -273,6 +271,7 @@ public class testdriver2 {
 				
 				choiceTrue = false;
 				
+				//Start loop to prevent user from choosing a different option
 				while (!choiceTrue)
 				{
 					System.out.println("Statistics:");
@@ -303,6 +302,7 @@ public class testdriver2 {
 				
 				choiceTrue = false;
 				
+				//Start loop to prevent user from choosing a different option
 				while (!choiceTrue)
 				{
 					System.out.println("(a) Most trusted user:");
@@ -341,12 +341,12 @@ public class testdriver2 {
 				break;
 			}
 		}
+		//End of loop
 	}
 
-	private static void reserve(BufferedReader in, Connector con, Database user) throws IOException {
-		String choice;
-		String vin;
-		String from;
+	private static void reserve(BufferedReader in, Connector con, Database user) throws IOException 
+	{
+		String choice, vin, from;
 		int time;
 		boolean confirm;
 		ArrayList<Triple> list = new ArrayList<Triple>();
@@ -399,8 +399,6 @@ public class testdriver2 {
 			System.out.println("VIN #: "+ temp.vin + " with cost: $" + temp.cost);
 		}
 		
-		
-		
 		choice = in.readLine();
 		
 		if (choice.toUpperCase().equals("Y"))
@@ -415,7 +413,7 @@ public class testdriver2 {
 	
 	public static void startDriver(BufferedReader in, Connector con, Database user) throws IOException
 	{
-		String choice, vin, from, to, catagory, make, model, year;
+		String choice, vin, from, to, catagory, make, model;
 		boolean loggedIn = true;
 		int c=0;
 		
@@ -451,10 +449,7 @@ public class testdriver2 {
 				make = in.readLine();
 				System.out.println("please enter car model:");
 				model = in.readLine();
-				//System.out.println("please enter car year:");
-				//while ((year = in.readLine()) == null && year.length() == 0);
 				
-				//TODO Own car from this information2
 				user.addCar(user.login, vin, catagory, make, model, con.stmt);
 				break;
 				
@@ -467,10 +462,7 @@ public class testdriver2 {
 				make = in.readLine();
 				System.out.println("please enter car model:");
 				model = in.readLine();
-				//System.out.println("please enter car year:");
-				//while ((year = in.readLine()) == null && year.length() == 0);
 				
-				//TODO Own car from this information2
 				user.modCar(user.login, vin, catagory, make, model, con.stmt);
 				break;
 				
@@ -481,7 +473,6 @@ public class testdriver2 {
 				to = in.readLine();
 				
 				//Set the hours of operation for the ud from this information
-				
 				user.addHours(user.login, from, to, con.stmt);
 				
 				break;
@@ -493,9 +484,7 @@ public class testdriver2 {
 				break;
 			}
 		}
-		
-		//Switch to main menu
-		mainMenu(in, con, user);
+		// End of loop
 	}
 	
 	// this is actually the reg menu!!! aka main menu option 1
@@ -549,7 +538,6 @@ public class testdriver2 {
 				//get out
 				if (c == 3)
 				{
-					active = false;
 					break;
 				}
 				
@@ -595,7 +583,6 @@ public class testdriver2 {
 				
 				if (c==3)
 				{
-					active = false;
 					break;
 				}
 				
@@ -604,11 +591,13 @@ public class testdriver2 {
 				System.out.println("Password:");
 				password = in.readLine();
 				
+				// Check if the login is true or not
 				if (c == 1)
 					user.verifyLogin(login, password, "user", con.stmt);
 				else
 					user.verifyLogin(login, password, "driver", con.stmt);
 				
+				// If the user is logged in switch to their menu
 				if (user.loggedIn == true)
 				{
 					if (c == 1)
@@ -640,22 +629,12 @@ public class testdriver2 {
 			con= new Connector();
 			System.out.println ("Database connection established");
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			  
-			
-			
-			//this matters
+
+			//Show the user the main menu
 			mainMenu(in, con, data);
 			
 			System.out.println("EoM");
 			con.stmt.close();
-			
-			
-			
-			
-			
-			
-			
-			//below this is irelivant
 		}
 		catch (Exception e)
 		{
