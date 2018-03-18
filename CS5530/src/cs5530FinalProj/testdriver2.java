@@ -63,7 +63,6 @@ public class testdriver2 {
 	
 	
 	//this is main menu option 2
-	
 	public static void startUser(BufferedReader in, Connector con, Database user) throws IOException
 	{
 		String choice, username, username2, vin, feedback, fid, score, from, to, model, address, catagory, number, output;
@@ -177,7 +176,6 @@ public class testdriver2 {
 				vin = in.readLine();
 				
 			    String result =	fb.getFeedback(vin, con.stmt);
-				
 				
 				System.out.println("Here are your results: \n" + result);
 

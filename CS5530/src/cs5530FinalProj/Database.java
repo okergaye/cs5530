@@ -123,7 +123,6 @@ public class Database
 	}
 
 
-
 	private int insertSQL(Statement s, String sql) 
 	{
 		int output = -1;
@@ -189,9 +188,7 @@ public class Database
 			 		+ "UC,UD,Feedback F, (Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = '" + login + "' and T.login2 = login and T.isTrusted = 1 GROUP BY fid) as R "
 			 		+ "where UC.login = UD.login and F.vin = UC.vin and F.fid = R.fid " + cat + add + mod +" "
 			 		+ "group by F.vin order by AvgRating ASC";
-			
-		//	(Select sum(rating) as sumRate, fid from Rates, Trust T where T.login1 = "A" and T.login2 = login and T.isTrusted = 1 GROUP BY fid)
-			
+						
 		}
 		
 		System.out.println(browseSQLHelper(s, sql));
@@ -286,10 +283,7 @@ public class Database
 	{
 		String sql = "INSERT INTO Ride "
 					+ values;
-	
-		//	INSERT INTO UC
-	    //  VALUES ( 001, "sedan" , 'notReal')
-		
+
 		int output = -1;
 		try
 		{
@@ -313,12 +307,10 @@ public class Database
 		} 
 	}
 	//problem 4 area end
-	
 	//for 3
 	public int addCar(String login, String vin, String cat, String make, String model, Statement s ) 
 	{
 		//Get the user info and make sure there is only 1
-		
 		String sql = "INSERT INTO UC "
 				+ "VALUES ('" + vin + "', '" + cat + "', '" + login + "',  '" + make + "', '" + model + "' ) ";
 		
@@ -375,7 +367,6 @@ public class Database
 		} 
 	}
 	//3 end
-
 	public int createUberDriver(String login, String password, String name, String address, String phone, Statement stmt)
 	{
 		String sql = "insert into UD values ('" + login + "', '" + password + "', '" + name + "', '" + address + "', '" + phone + "')";
@@ -524,7 +515,6 @@ public class Database
     	
 		System.out.println(output);
     }
-    
     
 	public int createUberUser(String login, String password, String name, String address, String phone, Statement stmt)
 	{
@@ -822,12 +812,12 @@ public class Database
 	 		}
 	 	}
 	 	
-	 	// Determine the two users degrees of seperation
+	 	// Determine the two users degrees of separation
 	 	if (oneDegree.contains(username2))
 	 	{
 	 		return 1;
 	 	}
-	 	else //Find if there degree of seperation is 2
+	 	else //Find if there degree of separation is 2
 	 	{
 	 		ArrayList<String> twoDegree = new ArrayList<String>();
 	 		for (String val : oneDegree)
@@ -862,7 +852,7 @@ public class Database
 			 	}
 	 		}
 	 		
-	 		//Check for degree of seperation is 2
+	 		//Check for degree of separation is 2
 	 		if (twoDegree.contains(username2))
 	 		{
 	 			return 2;
