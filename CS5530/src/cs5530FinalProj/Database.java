@@ -431,7 +431,6 @@ public class Database
 		String sql="";
 		String output="";
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -796,7 +795,6 @@ public class Database
 		String sql = "select Count(*) as count from Trust where login1 = '" + login1 + "' and login2 = '" + login2 + "'";
 		String output = "";
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -883,7 +881,6 @@ public class Database
 		ArrayList<String> oneDegree = new ArrayList<String>();
 		String sql = "select temp.login from Favorites f, Favorites temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + username1 + "'";
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -922,7 +919,6 @@ public class Database
 	 		{
 				sql = "select temp.login from Favorites f, Favorites temp where f.vin = temp.vin and f.login != temp.login and f.login = '" + val + "'";
 				rs=null;
-			 	System.out.println("executing "+sql);
 			 	try
 			 	{
 			 		rs=stmt.executeQuery(sql);
@@ -990,7 +986,6 @@ public class Database
 				+ "group by R.vin order by A";
 		
 		ResultSet rs=null;
-	 //	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -1030,7 +1025,6 @@ public class Database
 
 		 	output = "";
 			rs=null;
-		// 	System.out.println("executing "+sql);
 		 	try
 		 	{
 		 		rs=stmt.executeQuery(sql);
@@ -1074,7 +1068,6 @@ public class Database
 				+ "group by R.vin order by A";
 		
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -1114,14 +1107,13 @@ public class Database
 
 		 	output = "";
 			rs=null;
-		 	System.out.println("executing "+sql);
 		 	try
 		 	{
 		 		rs=stmt.executeQuery(sql);
-			 	System.out.println("Most Expensive " + cate + " cars");
+			 	System.out.println("Most Expensive cars in catagory: " + cate + "");
 		 		while (rs.next())
 		 		{
-		 			output += rs.getString("vin") + "\n";
+		 			output += "Average Cost: " + rs.getString("A")+ " for car vin: " + rs.getString("vin") + "\n";
 		 		}
 		     
 		 		rs.close();
@@ -1158,7 +1150,6 @@ public class Database
 				+ "group by F.vin order by A";
 
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
@@ -1197,14 +1188,13 @@ public class Database
 					+ "group by F.vin order by A) as T group by T.login order by B desc limit " + limit + "";
 		 	output = "";
 			rs=null;
-		 	System.out.println("executing "+sql);
 		 	try
 		 	{
 		 		rs=stmt.executeQuery(sql);
-			 	System.out.println("Highest rated users for " + cate + " cars");
+			 	System.out.println("Highest Rated Uber User for category: " + cate + "");
 		 		while (rs.next())
 		 		{
-		 			output += rs.getString("login") + "\n";
+		 			output += "Average Rating: " +rs.getString("B") + " for Uber Driver: " + rs.getString("login") + "\n";
 		 		}
 		     
 		 		rs.close();
@@ -1253,13 +1243,12 @@ public class Database
 		String sql = "select login2, sum(isTrusted) as trust from Trust group by login2 order by trust desc limit " + limit + "";
 		String output = "";
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			output += rs.getString("login2") + "\n";
+	 			output += "Trust total: " + rs.getString("trust") +" for user: " +rs.getString("login2") + "\n";
 	 		}
 	     
 	 		rs.close();
@@ -1289,13 +1278,13 @@ public class Database
 		String sql = "select f.login, avg(r.rating) as avgRating from Feedback f, Rates r where f.fid = r.fid group by f.login order by avgRating desc limit " + limit + "";
 		String output = "";
 		ResultSet rs=null;
-	 	System.out.println("executing "+sql);
 	 	try
 	 	{
 	 		rs=stmt.executeQuery(sql);
 	 		while (rs.next())
 	 		{
-	 			output += rs.getString("login") + "\n";
+	 			output += "Average Feedback Rating: " + rs.getString("avgRating") +" for user: " +rs.getString("login") + "\n";
+
 	 		}
 	     
 	 		rs.close();
