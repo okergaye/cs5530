@@ -361,13 +361,14 @@ public class testdriver2 {
 			
 			list = user.reserveCar(user.login, time, con.stmt);
 			
-			// Print out list of cars to reserve
+			// Print out list of cars to reserve available 
+			System.out.println("Here are all available Uber Cars:");
 			for (Triple temp : list)
 			{
-				System.out.println(temp.vin);
+				System.out.println("VIN #: "+temp.vin+", Cost: $" + temp.cost);
 			}
 			
-			System.out.println("please enter car vin number to reserve:");
+			System.out.println("Please enter the VIN # of the car you would like to reserve:");
 			vin = in.readLine();
 			
 			//Stores to confirm later
@@ -376,7 +377,7 @@ public class testdriver2 {
 				if (temp.vin.equals(vin))
 				{
 					confirmedList.add(new Triple(vin, temp.pid, temp.cost, temp.time));
-					System.out.println("added");
+					System.out.println("Added VIN #: "+ vin + "");
 					user.suggestion(user.login, vin, con.stmt);
 				}
 			}
@@ -393,6 +394,13 @@ public class testdriver2 {
 		
 		//User Confirmation
 		System.out.println("Do you want to confirm these reservations (Y/N):");
+		for (Triple temp : confirmedList)
+		{
+			System.out.println("VIN #: "+ temp.vin + " with cost: $" + temp.cost);
+		}
+		
+		
+		
 		choice = in.readLine();
 		
 		if (choice.toUpperCase().equals("Y"))
@@ -400,8 +408,8 @@ public class testdriver2 {
 			for (Triple temp : confirmedList)
 			{
 				user.reserveCarInsert(user.login, temp.vin, temp.pid, temp.cost, temp.time, con.stmt);
-				System.out.println("called");
 			}
+			System.out.println("Confirmed!");
 		}
 	}
 	

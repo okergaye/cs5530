@@ -543,10 +543,7 @@ public class Database
     	
     	Calendar date = new GregorianCalendar();
     	Date test1 = new Date(date.getTimeInMillis() + time);
-    	// reset hour, minutes, seconds and millis
-    
-    		System.out.println(date.get(0));
-    		//System.out.println("here");
+
     		
     		String sql = "insert into Reserve values ('" + login + "', '" + vin + "', '" + pid + "',  '" + cost + "', '" + test1 + "')";
     	
@@ -566,12 +563,11 @@ public class Database
 
     		if (output > 0)
     		{
-    			System.out.println("Car Added");
     			return 1;
     		}
     		else
     		{
-    			System.out.println("Something went wrong, are you a legitimate User?");
+    			System.out.println("Something went wrong, please try again");
     			return 0;
     		} 
 		
@@ -588,14 +584,13 @@ public class Database
     			+ "where r.login = T.login and r.vin != '" + vin + "' "
     			+ "group by r.vin order by A desc";
     	String output = "";
-    	
     	ResultSet rs = null;
 		try
 		{
 			rs=stmt.executeQuery(sql);
 			while (rs.next())
 			{
-				output += rs.getString("vin") + "\n";
+				output += "VIN #: " + rs.getString("vin") + "\n";
 			}
 
 			rs.close();
@@ -615,8 +610,13 @@ public class Database
 				System.out.println("cannot close resultset");
 			}
 		}
-    	
-		System.out.println("Other user have rode this car here are some other cars they rode with: ");
+    	if (output.equals("")) {
+    		System.out.println("No suggestions available");
+
+		}else {
+			System.out.println("Might we suggest other popular cars users have used: ");
+
+		}
 		System.out.println(output);
     }
     
