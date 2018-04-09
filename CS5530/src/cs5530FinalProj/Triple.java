@@ -9,7 +9,7 @@ public class Triple {
 	public String pid;
 	public String cost;
 	public int time;
-	Triple(String vin, String pid, String cost, int time){
+	public Triple(String vin, String pid, String cost, int time){
 		
 		this.vin = vin;
 		this.pid = pid;

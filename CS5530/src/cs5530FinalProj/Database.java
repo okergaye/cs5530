@@ -11,13 +11,13 @@ import java.util.GregorianCalendar;
 
 public class Database 
 {
-	String login;
+	public String login;
 	String password;
 	String name;
 	String address;
 	String phone;
 	boolean driver = false;
-	boolean loggedIn = false;
+	public boolean loggedIn = false;
 	
 	public Database()
 	{}
